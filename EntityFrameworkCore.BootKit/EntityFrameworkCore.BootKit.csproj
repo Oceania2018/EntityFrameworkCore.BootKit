@@ -2,12 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>EntityFrameworkCore Boot Kit (EFBK) is a quick start lib for using EntityFrameworkCore.</Description>
+    <PackageProjectUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</RepositoryUrl>
+    <PackageTags>EntityFramework EntityFrameworkCore Database</PackageTags>
+    <Authors>Haiping Chen</Authors>
+    <Company>Personal</Company>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Add a default IDbRecord interface. Upgrade Dynamic Linq extensions to 1.0.8.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EntityFrameworkCore.Triggers" Version="1.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.4.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
