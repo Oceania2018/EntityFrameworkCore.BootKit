@@ -9,8 +9,8 @@
     <PackageTags>EntityFramework EntityFrameworkCore Database</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>Add a default IDbRecord interface. Upgrade Dynamic Linq extensions to 1.0.8.</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>Add Shortcut for IDbRecord Transaction</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

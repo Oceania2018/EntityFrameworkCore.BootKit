@@ -214,6 +214,16 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
+        /// <summary>
+        /// Shortcut for IDbRecord Transaction
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public int DbTran(Action action)
+        {
+            return Transaction<IDbRecord>(action);
+        }
+
         public IDbContextTransaction GetDbContextTransaction<T>()
         {
             return GetMaster(typeof(T)).Database.BeginTransaction();
