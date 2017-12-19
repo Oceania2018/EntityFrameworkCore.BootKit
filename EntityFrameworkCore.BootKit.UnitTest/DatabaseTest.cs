@@ -18,7 +18,7 @@ namespace EntityFrameworkCore.BootKit.UnitTest
 
             db.BindDbContext<IDbRecord, DbContext4Sqlite>(new DatabaseBind
             {
-                MasterConnection = new SqliteConnection($"Data Source={Directory.GetCurrentDirectory()}\\..\\..\\bootkit.db"),
+                MasterConnection = new SqliteConnection($"Data Source={Directory.GetCurrentDirectory()}\\..\\..\\..\\..\\bootkit.db"),
                 CreateDbIfNotExist = true,
                 AssemblyNames = new string[] { "EntityFrameworkCore.BootKit.UnitTest" }
             });
@@ -64,6 +64,17 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             var order = db.Table<PizzaOrder>().FirstOrDefault();
 
             Assert.IsNotNull(order.Id);
+
+            int row = db.DbTran(delegate {
+                db.Add(new PizzaOrder
+                {
+                    OrderNumber = new Random().Next(1000).ToString(),
+                    CustomerName = "Haiping Chen",
+                    CreatedTime = DateTime.UtcNow
+                });
+            });
+
+            Assert.IsTrue(row == 1);
         }
     }
 }

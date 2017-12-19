@@ -46,9 +46,9 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
-        private DataContext GetMaster(Type entityType)
+        private DataContext GetMaster(Type tableInterface)
         {
-            DatabaseBind binding = DbContextBinds.First(x => (x.TableInterface != null && x.TableInterface.Equals(entityType)) || (x.Entities != null && x.Entities.Contains(entityType)));
+            DatabaseBind binding = DbContextBinds.First(x => (x.TableInterface != null && x.TableInterface.Equals(tableInterface)) || (x.Entities != null && x.Entities.Contains(tableInterface)));
 
             if (binding.DbContextMaster == null)
             {
@@ -103,6 +103,18 @@ namespace EntityFrameworkCore.BootKit
             {
                 return GetMaster(type).Find(type, keys);
             }
+        }
+
+        public void Add<TTableInterface>(Object entity)
+        {
+            var db = GetMaster(typeof(TTableInterface));
+            db.Add(entity);
+        }
+
+        public void Add(Object entity)
+        {
+            var db = GetMaster(typeof(IDbRecord));
+            db.Add(entity);
         }
 
         public DbSet<T> Table<T>() where T : class
@@ -165,9 +177,9 @@ namespace EntityFrameworkCore.BootKit
             return binding.DbContextMaster.SaveChanges();
         }
 
-        public int Transaction<T>(Action action)
+        public int Transaction<TTableInterface>(Action action)
         {
-            using (IDbContextTransaction transaction = GetMaster(typeof(T)).Database.BeginTransaction())
+            using (IDbContextTransaction transaction = GetMaster(typeof(TTableInterface)).Database.BeginTransaction())
             {
                 int affected = 0;
                 try
