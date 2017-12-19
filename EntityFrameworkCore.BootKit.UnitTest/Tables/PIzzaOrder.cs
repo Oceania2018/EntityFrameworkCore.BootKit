@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EntityFrameworkCore.BootKit.UnitTest.Tables
 {
-    public class PizzaOrder : Entity, IDbRecord
+    public class PizzaOrder : DbRecord, IDbRecord
     {
         [MaxLength(32)]
         public String OrderNumber { get; set; } 

@@ -22,7 +22,6 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // http://www.learnentityframeworkcore.com/
-            // modelBuilder.Entity<TaxonomyTermEntity>().HasIndex(x => x.Name);
             // don't need this code.
             //modelBuilder.Entity<Bundle>().ForSqlServerToTable("Bundles");
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

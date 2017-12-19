@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EntityFrameworkCore.BootKit.UnitTest.Tables
+namespace EntityFrameworkCore.BootKit
 {
-    public abstract class Entity
+    public abstract class DbRecord
     {
         [Key]
         [StringLength(36)]

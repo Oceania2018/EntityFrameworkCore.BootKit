@@ -120,25 +120,32 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
-        /*public DbSet Table(string tableName)
+        public IQueryable<Object> Table(string tableName)
         {
-            DatabaseBind binding = DbContextBinds.FirstOrDefault(x => x.EntityTypeList != null && x.EntityTypeList.Select(entity => entity.Name.ToLower()).Contains(tableName.ToLower()));
+            DatabaseBind binding = DbContextBinds.FirstOrDefault(x => x.Entities != null && x.Entities.Select(entity => entity.Name.ToLower()).Contains(tableName.ToLower()));
             if (binding == null) return null;
 
-            Type tableType = binding.EntityTypeList.First(x => x.Name.ToLower().Equals(tableName.ToLower()));
+            var tableType = binding.Entities.First(x => x.Name.ToLower().Equals(tableName.ToLower()));
 
             if (tableType == null) return null;
 
+            DbContext db = GetReader(tableType);
+
             if (binding.DbContextMaster != null && binding.DbContextMaster.Database.CurrentTransaction != null)
             {
-               gett
-                return GetMaster(tableType).Set().(tableType);
+                db = GetMaster(tableType);
             }
             else
             {
-                return GetReader(tableType).Set(tableType);
+                db = GetReader(tableType);
             }
-        }*/
+
+            var dbSet = (IQueryable<Object>)db.GetType()
+                .GetMethod("Set").MakeGenericMethod(tableType)
+                .Invoke(db, null);
+
+            return dbSet;
+        }
 
         public int ExecuteSqlCommand<T>(string sql, params object[] parameterms)
         {

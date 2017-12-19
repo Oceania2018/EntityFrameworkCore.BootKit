@@ -9,8 +9,10 @@
     <PackageTags>EntityFramework EntityFrameworkCore Database</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>1.0.2</Version>
-    <PackageReleaseNotes>Add Shortcut for IDbRecord Transaction</PackageReleaseNotes>
+    <Version>1.1.0</Version>
+    <PackageReleaseNotes>Added method IQueryable&lt;Object&gt; Table(string tableName) for DataContext.</PackageReleaseNotes>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

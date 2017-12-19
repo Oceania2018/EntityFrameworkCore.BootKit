@@ -24,6 +24,7 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             });
 
             AddRecord(db);
+            GetRecordsByTableName(db);
         }
 
         [TestMethod]
@@ -39,11 +40,19 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             });
 
             AddRecord(db);
+            GetRecordsByTableName(db);
+        }
+
+        private void GetRecordsByTableName(Database db)
+        {
+            var table = db.Table("PizzaOrder");
+            var pizzaOrder = table.First() as PizzaOrder;
+            Assert.IsNotNull(pizzaOrder.Id);
         }
 
         private void AddRecord(Database db)
         {
-            db.Transaction<IDbRecord>(delegate {
+            db.DbTran(delegate {
                 db.Table<PizzaOrder>().Add(new PizzaOrder
                 {
                     OrderNumber = new Random().Next(1000).ToString(),
