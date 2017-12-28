@@ -132,7 +132,7 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
-        public IQueryable<Object> Table(string tableName)
+        public IQueryable<DbRecord> Table(string tableName)
         {
             DatabaseBind binding = DbContextBinds.FirstOrDefault(x => x.Entities != null && x.Entities.Select(entity => entity.Name.ToLower()).Contains(tableName.ToLower()));
             if (binding == null) return null;
@@ -152,7 +152,7 @@ namespace EntityFrameworkCore.BootKit
                 db = GetReader(tableType);
             }
 
-            var dbSet = (IQueryable<Object>)db.GetType()
+            var dbSet = (IQueryable<DbRecord>)db.GetType()
                 .GetMethod("Set").MakeGenericMethod(tableType)
                 .Invoke(db, null);
 
