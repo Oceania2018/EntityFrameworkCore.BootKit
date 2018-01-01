@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace EntityFrameworkCore.BootKit.UnitTest.Tables
@@ -15,5 +16,8 @@ namespace EntityFrameworkCore.BootKit.UnitTest.Tables
 
         [Required]
         public DateTime CreatedTime { get; set; }
+
+        [ForeignKey("OrderId")]
+        public List<PizzaType> PizzaTypes { get; set; }
     }
 }

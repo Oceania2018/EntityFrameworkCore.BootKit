@@ -1,7 +1,9 @@
 using EntityFrameworkCore.BootKit.UnitTest.Tables;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -23,8 +25,15 @@ namespace EntityFrameworkCore.BootKit.UnitTest
                 AssemblyNames = new string[] { "EntityFrameworkCore.BootKit.UnitTest" }
             });
 
-            AddRecord(db);
-            GetRecordsByTableName(db);
+            int row = db.DbTran(() =>
+            {
+                AddRecord(db);
+                GetRecordsByTableName(db);
+                UpdateRecordsByTableName(db);
+                PatchRecord(db);
+            });
+
+            Assert.IsTrue(row == 1);
         }
 
         [TestMethod]
@@ -39,42 +48,78 @@ namespace EntityFrameworkCore.BootKit.UnitTest
                 AssemblyNames = new string[] { "EntityFrameworkCore.BootKit.UnitTest" }
             });
 
-            AddRecord(db);
-            GetRecordsByTableName(db);
+            int row = db.DbTran(() =>
+            {
+                AddRecord(db);
+                GetRecordsByTableName(db);
+                UpdateRecordsByTableName(db);
+                PatchRecord(db);
+            });
+
+            Assert.IsTrue(row == 1);
         }
 
         private void GetRecordsByTableName(Database db)
         {
             var table = db.Table("PizzaOrder");
-            var pizzaOrder = table.First() as PizzaOrder;
+            var pizzaOrder = table.First(x => x.Id == PIZZA_ORDER_ID) as PizzaOrder;
             Assert.IsNotNull(pizzaOrder.Id);
         }
 
+        public static String PIZZA_ORDER_ID = "7974f8d9-9124-4e24-a906-2e5bb3323e01";
+
         private void AddRecord(Database db)
         {
-            db.DbTran(delegate {
-                db.Table<PizzaOrder>().Add(new PizzaOrder
-                {
-                    OrderNumber = new Random().Next(1000).ToString(),
-                    CustomerName = "Haiping Chen",
-                    CreatedTime = DateTime.UtcNow
-                });
-            });
+            var pizza = new PizzaOrder
+            {
+                Id = PIZZA_ORDER_ID,
+                OrderNumber = new Random().Next(1000).ToString(),
+                CustomerName = "Haiping Chen",
+                CreatedTime = DateTime.UtcNow,
+                PizzaTypes = new List<PizzaType> {
+                    new PizzaType { Name = "Pizza Type 1", Amount = 10.99M },
+                    new PizzaType { Name = "Pizza Type 2", Amount = 9.9M }
+                }
+            };
 
-            var order = db.Table<PizzaOrder>().FirstOrDefault();
+            if (db.Table<PizzaOrder>().Any(x => x.Id == PIZZA_ORDER_ID)) return;
+
+            db.Table<PizzaOrder>().Add(pizza);
+
+            var order = db.Table<PizzaOrder>().Include(x => x.PizzaTypes).FirstOrDefault(x => x.Id == PIZZA_ORDER_ID);
 
             Assert.IsNotNull(order.Id);
+            Assert.IsTrue(order.PizzaTypes.Count == 2);
+        }
 
-            int row = db.DbTran(delegate {
-                db.Add(new PizzaOrder
-                {
-                    OrderNumber = new Random().Next(1000).ToString(),
-                    CustomerName = "Haiping Chen",
-                    CreatedTime = DateTime.UtcNow
-                });
-            });
+        private void UpdateRecordsByTableName(Database db)
+        {
+            DateTime dt = DateTime.UtcNow;
 
-            Assert.IsTrue(row == 1);
+            var table = db.Table("PizzaOrder");
+            var pizzaOrder = table.First(x => x.Id == PIZZA_ORDER_ID) as PizzaOrder;
+            pizzaOrder.CreatedTime = dt;
+
+            var po = db.Table<PizzaOrder>().Find(PIZZA_ORDER_ID);
+            Assert.IsTrue(po.CreatedTime == dt);
+        }
+
+        private void PatchRecord(Database db)
+        {
+            DateTime dt = DateTime.UtcNow;
+
+            var patch = new DbPatchModel
+            {
+                Table = "PizzaOrder",
+                Id = PIZZA_ORDER_ID
+            };
+
+            patch.Values.Add("CreatedTime", dt);
+
+            db.Patch<IDbRecord>(patch);
+
+            var po = db.Table<PizzaOrder>().Find(PIZZA_ORDER_ID);
+            Assert.IsTrue(po.CreatedTime == dt);
         }
     }
 }

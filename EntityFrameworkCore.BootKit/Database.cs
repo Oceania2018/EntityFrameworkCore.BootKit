@@ -18,11 +18,20 @@ namespace EntityFrameworkCore.BootKit
             DbContextBinds = new List<DatabaseBind>();
         }
 
+        internal DatabaseBind GetBinding(Type tableInterface)
+        {
+            return DbContextBinds.First(x => (x.TableInterface != null && x.TableInterface.Equals(tableInterface)) || (x.Entities != null && x.Entities.Contains(tableInterface)));
+        }
+
+        internal DatabaseBind GetBinding(string tableName)
+        {
+            return DbContextBinds.FirstOrDefault(x => x.Entities != null && x.Entities.Select(entity => entity.Name.ToLower()).Contains(tableName.ToLower()));
+        }
+
         private List<Type> GetAllEntityTypes(DatabaseBind bind)
         {
             return Utility.GetClassesWithInterface(bind.TableInterface, bind.AssemblyNames);
         }
-
 
         public void BindDbContext(DatabaseBind bind)
         {
@@ -46,9 +55,9 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
-        private DataContext GetMaster(Type tableInterface)
+        public DataContext GetMaster(Type tableInterface)
         {
-            DatabaseBind binding = DbContextBinds.First(x => (x.TableInterface != null && x.TableInterface.Equals(tableInterface)) || (x.Entities != null && x.Entities.Contains(tableInterface)));
+            var binding = GetBinding(tableInterface);
 
             if (binding.DbContextMaster == null)
             {
@@ -62,9 +71,9 @@ namespace EntityFrameworkCore.BootKit
             return binding.DbContextMaster;
         }
 
-        private DataContext GetReader(Type entityType)
+        public DataContext GetReader(Type tableInterface)
         {
-            DatabaseBind binding = DbContextBinds.First(x => x.Entities.Contains(entityType) || x.Entities.Contains(entityType));
+            var binding = GetBinding(tableInterface);
 
             if (binding.DbContextSlavers == null)
             {
@@ -132,33 +141,6 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
-        public IQueryable<DbRecord> Table(string tableName)
-        {
-            DatabaseBind binding = DbContextBinds.FirstOrDefault(x => x.Entities != null && x.Entities.Select(entity => entity.Name.ToLower()).Contains(tableName.ToLower()));
-            if (binding == null) return null;
-
-            var tableType = binding.Entities.First(x => x.Name.ToLower().Equals(tableName.ToLower()));
-
-            if (tableType == null) return null;
-
-            DbContext db = GetReader(tableType);
-
-            if (binding.DbContextMaster != null && binding.DbContextMaster.Database.CurrentTransaction != null)
-            {
-                db = GetMaster(tableType);
-            }
-            else
-            {
-                db = GetReader(tableType);
-            }
-
-            var dbSet = (IQueryable<DbRecord>)db.GetType()
-                .GetMethod("Set").MakeGenericMethod(tableType)
-                .Invoke(db, null);
-
-            return dbSet;
-        }
-
         public int ExecuteSqlCommand<T>(string sql, params object[] parameterms)
         {
             var db = GetMaster(typeof(T)).Database;
@@ -175,77 +157,6 @@ namespace EntityFrameworkCore.BootKit
         {
             DatabaseBind binding = DbContextBinds.Where(x => x.DbContextType != null).First(x => x.DbContextMaster != null && x.DbContextMaster.Database.CurrentTransaction != null);
             return binding.DbContextMaster.SaveChanges();
-        }
-
-        public int Transaction<TTableInterface>(Action action)
-        {
-            using (IDbContextTransaction transaction = GetMaster(typeof(TTableInterface)).Database.BeginTransaction())
-            {
-                int affected = 0;
-                try
-                {
-                    action();
-                    affected = SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    if (ex.Message.Contains("See the inner exception for details"))
-                    {
-                        throw ex.InnerException;
-                    }
-                    else
-                    {
-                        throw ex;
-                    }
-                }
-
-                return affected;
-            }
-        }
-
-        public TResult Transaction<T, TResult>(Func<TResult> action)
-        {
-            using (IDbContextTransaction transaction = GetMaster(typeof(T)).Database.BeginTransaction())
-            {
-                TResult result = default(TResult);
-                try
-                {
-                    result = action();
-                    SaveChanges();
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    if (ex.Message.Contains("See the inner exception for details"))
-                    {
-                        throw ex.InnerException;
-                    }
-                    else
-                    {
-                        throw ex;
-                    }
-                }
-
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// Shortcut for IDbRecord Transaction
-        /// </summary>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public int DbTran(Action action)
-        {
-            return Transaction<IDbRecord>(action);
-        }
-
-        public IDbContextTransaction GetDbContextTransaction<T>()
-        {
-            return GetMaster(typeof(T)).Database.BeginTransaction();
         }
     }
 }
