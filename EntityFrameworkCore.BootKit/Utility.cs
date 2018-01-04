@@ -51,6 +51,14 @@ namespace EntityFrameworkCore.BootKit
             {
                 property.SetValue(obj, value.ToString(), null);
             }
+            else if (property.PropertyType.Equals(typeof(DateTime)) && value.GetType() == typeof(string))
+            {
+                property.SetValue(obj, DateTime.Parse(value.ToString()), null);
+            }
+            else if (property.PropertyType.Equals(typeof(Int32)) && value.GetType() == typeof(string))
+            {
+                property.SetValue(obj, Int32.Parse(value.ToString()), null);
+            }
             /*else if (property.PropertyType.IsEnum)
             {
                 property.SetValue(obj, int.Parse(value.ToString()), null);
@@ -64,14 +72,21 @@ namespace EntityFrameworkCore.BootKit
             else if (property.PropertyType.IsGenericType && Nullable.GetUnderlyingType(property.PropertyType) != null && Nullable.GetUnderlyingType(property.PropertyType).Equals(typeof(int)))
             {
                 property.SetValue(obj, int.Parse(value.ToString()), null);
-            }
+            }*/
             else if (property.PropertyType.IsGenericType && Nullable.GetUnderlyingType(property.PropertyType) != null && Nullable.GetUnderlyingType(property.PropertyType).Equals(typeof(decimal)))
             {
-                property.SetValue(obj, decimal.Parse(value.ToString()), null);
-            }*/
+                if (String.IsNullOrEmpty(value.ToString()))
+                {
+                    property.SetValue(obj, null);
+                }
+                else
+                {
+                    property.SetValue(obj, decimal.Parse(value.ToString()));
+                }
+            }
             else if (property.PropertyType.Equals(typeof(Decimal)))
             {
-                property.SetValue(obj, decimal.Parse(value.ToString()), null);
+                property.SetValue(obj, decimal.Parse(value.ToString()));
             }
             else
             {

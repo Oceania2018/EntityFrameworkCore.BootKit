@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Linq.Dynamic.Core;
 
 namespace EntityFrameworkCore.BootKit
 {
@@ -18,16 +19,38 @@ namespace EntityFrameworkCore.BootKit
 
             if (result) return 0;
 
-            var record = db.Table(patch.Table).FirstOrDefault(x => x.Id == patch.Id);
+            if (!String.IsNullOrEmpty(patch.Id))
+            {
+                var record = db.Table(patch.Table).FirstOrDefault(x => x.Id == patch.Id);
+                SetValues(patch, record);
 
+                return 1;
+            }
+            else
+            {
+                var records = db.Table(patch.Table).Where(patch.Where, patch.Params).ToList();
+                records.ForEach(record => SetValues(patch, record));
+
+                return records.Count;
+            }
+        }
+
+        private static void SetValues(DbPatchModel patch, DbRecord record)
+        {
             patch.Values.Where(x => !patch.IgnoredColumns.Contains(x.Key))
                 .ToList()
                 .ForEach(x =>
                 {
-                    record.SetValue(x.Key, x.Value);
+                    try
+                    {
+                        record.SetValue(x.Key, x.Value);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Set value exception: {x.Key} {x.Value}");
+                        throw ex;
+                    }
                 });
-
-            return 1;
         }
 
         public static IQueryable<DbRecord> Table(this Database db, string tableName)

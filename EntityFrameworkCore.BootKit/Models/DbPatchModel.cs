@@ -14,7 +14,11 @@ namespace EntityFrameworkCore.BootKit
 
         public string Id { get; set; }
         public string Table { get; set; }
+        public string Where { get; set; }
+        public object[] Params { get; set; }
+
         public List<String> IgnoredColumns { get; set; }
+
         public Dictionary<String, Object> Values { get; set; }
     }
 }
