@@ -16,6 +16,23 @@ namespace EntityFrameworkCore.BootKit.UnitTest
         [TestMethod]
         public void TestSqlite()
         {
+            AddRecord(GetDb());
+            GetRecordsByTableName(GetDb());
+            UpdateRecordsByTableName(GetDb());
+            PatchRecord(GetDb());
+        }
+
+        [TestMethod]
+        public void TestSqlServer()
+        {
+            AddRecord(GetDb());
+            GetRecordsByTableName(GetDb());
+            UpdateRecordsByTableName(GetDb());
+            PatchRecord(GetDb());
+        }
+
+        private Database GetDb()
+        {
             var db = new Database();
 
             db.BindDbContext<IDbRecord, DbContext4Sqlite>(new DatabaseBind
@@ -25,38 +42,7 @@ namespace EntityFrameworkCore.BootKit.UnitTest
                 AssemblyNames = new string[] { "EntityFrameworkCore.BootKit.UnitTest" }
             });
 
-            int row = db.DbTran(() =>
-            {
-                AddRecord(db);
-                GetRecordsByTableName(db);
-                UpdateRecordsByTableName(db);
-                PatchRecord(db);
-            });
-
-            Assert.IsTrue(row == 1);
-        }
-
-        [TestMethod]
-        public void TestSqlServer()
-        {
-            var db = new Database();
-
-            db.BindDbContext<IDbRecord, DbContext4SqlServer>(new DatabaseBind
-            {
-                MasterConnection = new SqlConnection($"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=bootkit;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"),
-                CreateDbIfNotExist = true,
-                AssemblyNames = new string[] { "EntityFrameworkCore.BootKit.UnitTest" }
-            });
-
-            int row = db.DbTran(() =>
-            {
-                AddRecord(db);
-                GetRecordsByTableName(db);
-                UpdateRecordsByTableName(db);
-                PatchRecord(db);
-            });
-
-            Assert.IsTrue(row == 1);
+            return db;
         }
 
         private void GetRecordsByTableName(Database db)
@@ -84,7 +70,7 @@ namespace EntityFrameworkCore.BootKit.UnitTest
 
             if (db.Table<PizzaOrder>().Any(x => x.Id == PIZZA_ORDER_ID)) return;
 
-            db.Table<PizzaOrder>().Add(pizza);
+            db.DbTran(() => db.Table<PizzaOrder>().Add(pizza));
 
             var order = db.Table<PizzaOrder>().Include(x => x.PizzaTypes).FirstOrDefault(x => x.Id == PIZZA_ORDER_ID);
 
@@ -106,7 +92,7 @@ namespace EntityFrameworkCore.BootKit.UnitTest
 
         private void PatchRecord(Database db)
         {
-            DateTime dt = DateTime.UtcNow;
+            DateTime dt = DateTime.UtcNow.AddMinutes(-5);
 
             var patch = new DbPatchModel
             {
@@ -116,10 +102,13 @@ namespace EntityFrameworkCore.BootKit.UnitTest
 
             patch.Values.Add("CreatedTime", dt);
 
-            db.Patch<IDbRecord>(patch);
+            int row = db.DbTran(() =>
+            {
+                db.Patch<IDbRecord>(patch);
+            });
 
             var po = db.Table<PizzaOrder>().Find(PIZZA_ORDER_ID);
-            Assert.IsTrue(po.CreatedTime == dt);
+            Assert.IsTrue(po.CreatedTime.ToString() == dt.ToString());
         }
     }
 }
