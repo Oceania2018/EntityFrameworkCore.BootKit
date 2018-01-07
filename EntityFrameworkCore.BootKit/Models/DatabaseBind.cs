@@ -20,7 +20,5 @@ namespace EntityFrameworkCore.BootKit
         public List<Type> Entities { get; set; }
 
         public Boolean CreateDbIfNotExist { get; set; }
-
-        public String[] AssemblyNames { get; set; }
     }
 }

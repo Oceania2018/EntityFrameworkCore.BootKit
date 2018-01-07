@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace EntityFrameworkCore.BootKit
     public class Database
     {
         internal List<DatabaseBind> DbContextBinds;
+
+        public static String[] Assemblies { get; set; }
+        public static String ContentRootPath { get; set; }
+        public static IConfiguration Configuration { get; set; }
 
         public Database()
         {
@@ -30,7 +35,7 @@ namespace EntityFrameworkCore.BootKit
 
         private List<Type> GetAllEntityTypes(DatabaseBind bind)
         {
-            return Utility.GetClassesWithInterface(bind.TableInterface, bind.AssemblyNames);
+            return Utility.GetClassesWithInterface(bind.TableInterface, Assemblies);
         }
 
         public void BindDbContext(DatabaseBind bind)
@@ -87,18 +92,20 @@ namespace EntityFrameworkCore.BootKit
                 binding.DbContextSlavers.Add(dbContext);
             }
 
+            int slaver = new Random().Next(binding.DbContextSlavers.Count);
+
             return binding.DbContextSlavers.First();
         }
 
         /*public IMongoCollection<T> Collection<T>(string collection) where T : class
         {
-            EfDbBinding4MongoDb binding = DbContextBinds.First(x => x.GetType().Equals(typeof(EfDbBinding4MongoDb))) as EfDbBinding4MongoDb;
-            if (binding.DbContext == null)
+            DatabaseBind binding = GetBinding(typeof(T));
+            if (binding.DbContextMaster == null)
             {
                 binding.DbContext = new MongoDbContext(binding.ConnectionString);
             }
 
-            return binding.DbContext.Database.GetCollection<T>(collection);
+            return binding.DbContextSlavers.First();
         }*/
 
         public Object Find(Type type, params string[] keys)

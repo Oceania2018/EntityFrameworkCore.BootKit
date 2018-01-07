@@ -34,12 +34,12 @@ namespace EntityFrameworkCore.BootKit.UnitTest
         private Database GetDb()
         {
             var db = new Database();
+            Database.Assemblies = new string[] { "EntityFrameworkCore.BootKit.UnitTest" };
 
             db.BindDbContext<IDbRecord, DbContext4Sqlite>(new DatabaseBind
             {
                 MasterConnection = new SqliteConnection($"Data Source={Directory.GetCurrentDirectory()}\\..\\..\\..\\..\\bootkit.db"),
                 CreateDbIfNotExist = true,
-                AssemblyNames = new string[] { "EntityFrameworkCore.BootKit.UnitTest" }
             });
 
             return db;

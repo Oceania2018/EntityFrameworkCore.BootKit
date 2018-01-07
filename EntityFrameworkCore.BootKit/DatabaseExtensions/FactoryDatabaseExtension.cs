@@ -13,7 +13,7 @@ namespace EntityFrameworkCore.BootKit
         {
             var binding = db.GetBinding(typeof(TTableInterface));
 
-            var permissions = Utility.GetInstanceWithInterface<IRequireDbPermission>(binding.AssemblyNames);
+            var permissions = Utility.GetInstanceWithInterface<IRequireDbPermission>(Database.Assemblies);
 
             var result = permissions.Any(x => !x.AllowPatch(patch));
 
