@@ -16,39 +16,50 @@ namespace EntityFrameworkCore.BootKit.UnitTest
         [TestMethod]
         public void TestSqlite()
         {
-            AddRecord();
-            GetRecordsByTableName();
-            UpdateRecordsByTableName();
-            PatchRecord();
+            AddRecord(GetDb(DatabaseType.Sqlite));
+            AddRecordByTableName(GetDb(DatabaseType.Sqlite));
+            GetRecordsByTableName(GetDb(DatabaseType.Sqlite));
+            UpdateRecordsByTableName(GetDb(DatabaseType.Sqlite));
+            PatchRecord(GetDb(DatabaseType.Sqlite));
         }
 
         [TestMethod]
         public void TestSqlServer()
         {
-            AddRecord();
-            GetRecordsByTableName();
-            UpdateRecordsByTableName();
-            PatchRecord();
+            AddRecord(GetDb(DatabaseType.SqlServer));
+            AddRecordByTableName(GetDb(DatabaseType.SqlServer));
+            GetRecordsByTableName(GetDb(DatabaseType.SqlServer));
+            UpdateRecordsByTableName(GetDb(DatabaseType.SqlServer));
+            PatchRecord(GetDb(DatabaseType.SqlServer));
         }
 
-        private Database GetDb()
+        private Database GetDb(DatabaseType databaseType)
         {
             var db = new Database();
             Database.Assemblies = new string[] { "EntityFrameworkCore.BootKit.UnitTest" };
 
-            db.BindDbContext<IDbRecord, DbContext4Sqlite>(new DatabaseBind
+            if (databaseType == DatabaseType.Sqlite)
             {
-                MasterConnection = new SqliteConnection($"Data Source={Directory.GetCurrentDirectory()}\\..\\..\\..\\..\\bootkit.db"),
-                CreateDbIfNotExist = true,
-            });
-
+                db.BindDbContext<IDbRecord, DbContext4Sqlite>(new DatabaseBind
+                {
+                    MasterConnection = new SqliteConnection($"Data Source={Directory.GetCurrentDirectory()}\\..\\..\\..\\..\\Bootkit.db"),
+                    CreateDbIfNotExist = true,
+                });
+            }
+            else if (databaseType == DatabaseType.SqlServer)
+            {
+                db.BindDbContext<IDbRecord, DbContext4SqlServer>(new DatabaseBind
+                {
+                    MasterConnection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Bootkit;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"),
+                    CreateDbIfNotExist = true
+                });
+            }
+            
             return db;
         }
 
-        private void GetRecordsByTableName()
+        private void GetRecordsByTableName(Database db)
         {
-            var db = GetDb();
-
             var table = db.Table("PizzaOrder");
             var pizzaOrder = table.First(x => x.Id == PIZZA_ORDER_ID) as PizzaOrder;
             Assert.IsNotNull(pizzaOrder.Id);
@@ -56,10 +67,8 @@ namespace EntityFrameworkCore.BootKit.UnitTest
 
         public static String PIZZA_ORDER_ID = "7974f8d9-9124-4e24-a906-2e5bb3323e01";
 
-        private void AddRecord()
+        private void AddRecord(Database db)
         {
-            var db = GetDb();
-
             var pizza = new PizzaOrder
             {
                 Id = PIZZA_ORDER_ID,
@@ -82,10 +91,8 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             Assert.IsTrue(order.PizzaTypes.Count == 2);
         }
 
-        private void UpdateRecordsByTableName()
+        private void UpdateRecordsByTableName(Database db)
         {
-            var db = GetDb();
-
             DateTime dt = DateTime.UtcNow;
 
             var table = db.Table("PizzaOrder");
@@ -96,10 +103,8 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             Assert.IsTrue(po.CreatedTime == dt);
         }
 
-        private void PatchRecord()
+        private void PatchRecord(Database db)
         {
-            var db = GetDb();
-
             DateTime dt = DateTime.UtcNow.AddMinutes(-5);
 
             var patch = new DbPatchModel
@@ -114,6 +119,19 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             
             var po = db.Table<PizzaOrder>().Find(PIZZA_ORDER_ID);
             Assert.IsTrue(po.CreatedTime.ToString() == dt.ToString());
+        }
+
+        private void AddRecordByTableName(Database db)
+        {
+            var entity = new PizzaType {
+                Name = "PIZZA" + DateTime.UtcNow.Ticks,
+                OrderId = PIZZA_ORDER_ID,
+                Amount = new Random().Next(10000)
+            };
+
+            db.Add("PizzaType", entity);
+
+            Assert.IsNotNull(entity.Id);
         }
     }
 }

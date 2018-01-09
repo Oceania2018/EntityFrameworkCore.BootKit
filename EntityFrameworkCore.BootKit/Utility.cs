@@ -8,6 +8,23 @@ namespace EntityFrameworkCore.BootKit
 {
     public static class Utility
     {
+        public static Type GetType(String typeName, params string[] assemblyNames)
+        {
+            for (int i = 0; i < assemblyNames.Count(); i++)
+            {
+                List<Type> types = Assembly.Load(new AssemblyName(assemblyNames[i]))
+                    .GetTypes().Where(x => !x.IsAbstract && !x.FullName.StartsWith("<>f__AnonymousType")).ToList();
+
+                Type type = types.FirstOrDefault(x => x.Name == typeName);
+                if (type != null)
+                {
+                    return type;
+                };
+            }
+
+            return null;
+        }
+
         public static List<Type> GetClassesWithInterface(Type type, string assemblyName)
         {
             List<Type> types = Assembly.Load(new AssemblyName(assemblyName))
@@ -39,6 +56,13 @@ namespace EntityFrameworkCore.BootKit
             instances.AddRange(objects);
 
             return instances;
+        }
+
+        public static object InvokeMethod(this object obj, string methodName, object[] parameters)
+        {
+            Type type = obj.GetType();
+            MethodInfo method = type.GetMethod(methodName);
+            return method.Invoke(obj, parameters);
         }
 
         public static bool SetValue(this object obj, string propName, object value)

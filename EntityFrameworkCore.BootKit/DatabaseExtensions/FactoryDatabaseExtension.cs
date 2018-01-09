@@ -78,5 +78,23 @@ namespace EntityFrameworkCore.BootKit
 
             return dbSet;
         }
+
+        public static object Add(this Database db, string table, Object entity)
+        {
+            var dbSet = db.Table(table);
+
+            var tableType = Utility.GetType(table, Database.Assemblies);
+
+            return dbSet.InvokeMethod("Add", new Object[] { entity });
+        }
+
+        public static object Remove(this Database db, string table, Object entity)
+        {
+            var dbSet = db.Table(table);
+
+            var tableType = Utility.GetType(table, Database.Assemblies);
+
+            return dbSet.InvokeMethod("Remove", new Object[] { entity });
+        }
     }
 }

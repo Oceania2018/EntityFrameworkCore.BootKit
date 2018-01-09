@@ -12,5 +12,8 @@ namespace EntityFrameworkCore.BootKit
         [StringLength(36)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public String Id { get; set; }
+
+        [DataType(DataType.DateTime)]
+        public DateTime UpdatedTime { get; set; } = DateTime.UtcNow;
     }
 }
