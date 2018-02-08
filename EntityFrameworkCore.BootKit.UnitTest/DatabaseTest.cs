@@ -33,6 +33,13 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             PatchRecord(GetDb(DatabaseType.SqlServer));
         }
 
+        [TestMethod]
+        public void TestMongoDb()
+        {
+            var db = GetDb(DatabaseType.MongoDb);
+            var collection = db.Collection<MongoDbCollectionTest>().FirstOrDefault();
+        }
+
         private Database GetDb(DatabaseType databaseType)
         {
             var db = new Database();
@@ -54,7 +61,14 @@ namespace EntityFrameworkCore.BootKit.UnitTest
                     CreateDbIfNotExist = true
                 });
             }
-            
+            else if (databaseType == DatabaseType.MongoDb)
+            {
+                db.BindDbContext<IDbRecord, DbContext4MongoDb>(new DatabaseBind
+                {
+                    MasterConnection = new MongoDbConnection("mongodb://user:password@localhost:27017/db"),
+                });
+            }
+
             return db;
         }
 
