@@ -10,6 +10,7 @@ EntityFrameworkCore Boot Kit (EFBK) is a quick start lib for using EntityFramewo
 * Multiple database with distributed transaction supported, and MySQL multiple databases/tables sharding supported.
 * Tracking entry change history.
 * Built-in DbFactory with access control list (ACL) hook.
+* Support MongoDb in LINQ.
 
 ## Get started
 ### How to install
@@ -89,4 +90,14 @@ int row = db.DbTran(() =>
 
 ````cs
 	string sql = table.ToSql();
+````
+
+* Added MongoDb support
+
+````cs
+db.BindDbContext<IDbRecord, DbContext4MongoDb>(new DatabaseBind
+{
+	MasterConnection = new MongoDbConnection("mongodb://user:password@localhost:27017/db"),
+});
+var collection = db.Collection<MongoDbCollectionTest>().FirstOrDefault();
 ````

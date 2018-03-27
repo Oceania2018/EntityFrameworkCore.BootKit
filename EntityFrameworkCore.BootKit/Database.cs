@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -146,6 +147,15 @@ namespace EntityFrameworkCore.BootKit
             {
                 return GetMaster(entityType).Set<T>();
             }
+        }
+
+        public IMongoCollection<T> Collection<T>(string name = "") where T : class
+        {
+            Type entityType = typeof(T);
+
+            DatabaseBind binding = DbContextBinds.First(x => x.GetType().Equals(typeof(DatabaseBind))) as DatabaseBind;
+            var db = GetMaster(entityType);
+            return (db as DbContext4MongoDb).Set<T>(name);
         }
 
         public int ExecuteSqlCommand<T>(string sql, params object[] parameterms)
