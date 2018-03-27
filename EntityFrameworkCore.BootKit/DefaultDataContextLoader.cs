@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Text;
 
 namespace EntityFrameworkCore.BootKit
@@ -20,7 +21,6 @@ namespace EntityFrameworkCore.BootKit
             string db = Database.Configuration.GetSection("Database:Default").Value;
             string connectionString = Database.Configuration.GetSection("Database:ConnectionStrings")[db];
 
-
             if (db.Equals("SqlServer"))
             {
                 dc.BindDbContext<IDbRecord, DbContext4SqlServer>(new DatabaseBind
@@ -31,10 +31,14 @@ namespace EntityFrameworkCore.BootKit
             }
             else if (db.Equals("Sqlite"))
             {
-                connectionString = connectionString.Replace("|DataDirectory|\\", Database.ContentRootPath + "\\App_Data\\");
+                connectionString = connectionString.Replace($"|DataDirectory|", Database.ContentRootPath + $"{Path.DirectorySeparatorChar}App_Data{Path.DirectorySeparatorChar}");
+                Console.WriteLine(connectionString);
                 dc.BindDbContext<IDbRecord, DbContext4Sqlite>(new DatabaseBind
                 {
                     MasterConnection = new SqliteConnection(connectionString),
+                    SlaveConnections = new List<System.Data.Common.DbConnection> {
+                        new SqliteConnection(connectionString)
+                    },
                     CreateDbIfNotExist = true
                 });
             }
