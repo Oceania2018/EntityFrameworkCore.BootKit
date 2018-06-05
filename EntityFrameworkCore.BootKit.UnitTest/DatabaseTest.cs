@@ -2,6 +2,7 @@ using EntityFrameworkCore.BootKit.UnitTest.Tables;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -34,10 +35,20 @@ namespace EntityFrameworkCore.BootKit.UnitTest
         }
 
         [TestMethod]
+        public void TestMySql()
+        {
+            AddRecord(GetDb(DatabaseType.MySql));
+            AddRecordByTableName(GetDb(DatabaseType.MySql));
+            GetRecordsByTableName(GetDb(DatabaseType.MySql));
+            UpdateRecordsByTableName(GetDb(DatabaseType.MySql));
+            PatchRecord(GetDb(DatabaseType.MySql));
+        }
+
+        [TestMethod]
         public void TestMongoDb()
         {
             var db = GetDb(DatabaseType.MongoDb);
-            var collection = db.Collection<MongoDbCollectionTest>().FirstOrDefault();
+            var collection = db.Collection<MongoDbCollection>().FirstOrDefault();
         }
 
         private Database GetDb(DatabaseType databaseType)
@@ -61,9 +72,17 @@ namespace EntityFrameworkCore.BootKit.UnitTest
                     CreateDbIfNotExist = true
                 });
             }
+            else if (databaseType == DatabaseType.MySql)
+            {
+                db.BindDbContext<IDbRecord, DbContext4MySql>(new DatabaseBind
+                {
+                    MasterConnection = new MySqlConnection("Data Source=readreportone.cyby9fnjaodh.us-east-1.rds.amazonaws.com;port=3306;Initial Catalog=GSMP;user id=EC2Live;password=ec2!@smp;CharSet=utf8;Allow User Variables=True;"),
+                    CreateDbIfNotExist = false
+                });
+            }
             else if (databaseType == DatabaseType.MongoDb)
             {
-                db.BindDbContext<IDbRecord, DbContext4MongoDb>(new DatabaseBind
+                db.BindDbContext<INoSqlDbRecord, DbContext4MongoDb>(new DatabaseBind
                 {
                     MasterConnection = new MongoDbConnection("mongodb://user:password@localhost:27017/db"),
                 });
