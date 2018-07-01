@@ -14,12 +14,12 @@ namespace EntityFrameworkCore.BootKit
         /// Get data contexts implemented IDbRecord
         /// </summary>
         /// <returns></returns>
-        public Database GetDefaultDc()
+        public Database GetDefaultDc(string dbConfigSection = "Database")
         {
             var dc = new Database();
 
-            string db = Database.Configuration.GetSection("Database:Default").Value;
-            string connectionString = Database.Configuration.GetSection("Database:ConnectionStrings")[db];
+            string db = Database.Configuration.GetSection($"{dbConfigSection}:Default").Value;
+            string connectionString = Database.Configuration.GetSection($"{dbConfigSection}:ConnectionStrings")[db];
 
             if (db.Equals("SqlServer"))
             {
