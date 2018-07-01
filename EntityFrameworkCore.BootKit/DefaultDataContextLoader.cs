@@ -14,7 +14,12 @@ namespace EntityFrameworkCore.BootKit
         /// Get data contexts implemented IDbRecord
         /// </summary>
         /// <returns></returns>
-        public Database GetDefaultDc(string dbConfigSection = "Database")
+        public Database GetDefaultDc()
+        {
+            return GetDefaultDc<IDbRecord>("Database");
+        }
+
+        public Database GetDefaultDc<IDbRecordBinding>(string dbConfigSection)
         {
             var dc = new Database();
 
@@ -23,7 +28,7 @@ namespace EntityFrameworkCore.BootKit
 
             if (db.Equals("SqlServer"))
             {
-                dc.BindDbContext<IDbRecord, DbContext4SqlServer>(new DatabaseBind
+                dc.BindDbContext<IDbRecordBinding, DbContext4SqlServer>(new DatabaseBind
                 {
                     MasterConnection = new SqlConnection(connectionString),
                     CreateDbIfNotExist = true
@@ -33,7 +38,7 @@ namespace EntityFrameworkCore.BootKit
             {
                 connectionString = connectionString.Replace($"|DataDirectory|", Database.ContentRootPath + $"{Path.DirectorySeparatorChar}App_Data{Path.DirectorySeparatorChar}");
                 Console.WriteLine(connectionString);
-                dc.BindDbContext<IDbRecord, DbContext4Sqlite>(new DatabaseBind
+                dc.BindDbContext<IDbRecordBinding, DbContext4Sqlite>(new DatabaseBind
                 {
                     MasterConnection = new SqliteConnection(connectionString),
                     SlaveConnections = new List<System.Data.Common.DbConnection> {
@@ -44,7 +49,7 @@ namespace EntityFrameworkCore.BootKit
             }
             else if (db.Equals("MySql"))
             {
-                dc.BindDbContext<IDbRecord, DbContext4MySql>(new DatabaseBind
+                dc.BindDbContext<IDbRecordBinding, DbContext4MySql>(new DatabaseBind
                 {
                     MasterConnection = new MySqlConnection(connectionString),
                     CreateDbIfNotExist = true
@@ -52,7 +57,7 @@ namespace EntityFrameworkCore.BootKit
             }
             else if (db.Equals("InMemory"))
             {
-                dc.BindDbContext<IDbRecord, DbContext4Memory>(new DatabaseBind
+                dc.BindDbContext<IDbRecordBinding, DbContext4Memory>(new DatabaseBind
                 {
                 });
             }

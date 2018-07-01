@@ -10,16 +10,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>Add dbConfigSection to support multiple database connection config.</Description>
+    <Description>Add IDbRecordBinding to support multiple database connection config.</Description>
     <PackageProjectUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</RepositoryUrl>
     <PackageTags>EntityFramework EntityFrameworkCore Database</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>1.6.1</Version>
-    <PackageReleaseNotes>Add dbConfigSection to support multiple database connection config.</PackageReleaseNotes>
-    <AssemblyVersion>1.6.1.0</AssemblyVersion>
-    <FileVersion>1.6.1.0</FileVersion>
+    <Version>1.6.2</Version>
+    <PackageReleaseNotes>Add IDbRecordBinding to support multiple database connection config.</PackageReleaseNotes>
+    <AssemblyVersion>1.6.2.0</AssemblyVersion>
+    <FileVersion>1.6.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
