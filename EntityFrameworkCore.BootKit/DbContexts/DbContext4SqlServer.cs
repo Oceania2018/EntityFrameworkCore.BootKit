@@ -37,4 +37,26 @@ namespace EntityFrameworkCore.BootKit
             base.OnConfiguring(optionsBuilder);
         }
     }
+
+    public class DbContext4SqlServer4 : DataContext
+    {
+        public DbContext4SqlServer4(DbContextOptions options) : base(options) { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(ConnectionString);
+            base.OnConfiguring(optionsBuilder);
+        }
+    }
+
+    public class DbContext4SqlServer5 : DataContext
+    {
+        public DbContext4SqlServer5(DbContextOptions options) : base(options) { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(ConnectionString);
+            base.OnConfiguring(optionsBuilder);
+        }
+    }
 }
