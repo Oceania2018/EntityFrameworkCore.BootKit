@@ -58,7 +58,7 @@ namespace EntityFrameworkCore.BootKit
             return instances;
         }
 
-        public static object InvokeMethod(this object obj, string methodName, object[] parameters)
+        public static object InvokeFunction(this object obj, string methodName, object[] parameters)
         {
             Type type = obj.GetType();
             MethodInfo method = type.GetMethod(methodName);

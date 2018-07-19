@@ -10,7 +10,11 @@ namespace EntityFrameworkCore.BootKit
         public DbContext4MySql(DbContextOptions options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if POMELO_MYSQL
+            optionsBuilder.UseMySql(ConnectionString);
+#else
             optionsBuilder.UseMySQL(ConnectionString);
+#endif
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -20,7 +24,11 @@ namespace EntityFrameworkCore.BootKit
         public DbContext4MySql2(DbContextOptions options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if POMELO_MYSQL
+            optionsBuilder.UseMySql(ConnectionString);
+#else
             optionsBuilder.UseMySQL(ConnectionString);
+#endif
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -30,7 +38,11 @@ namespace EntityFrameworkCore.BootKit
         public DbContext4MySql3(DbContextOptions options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if POMELO_MYSQL
+            optionsBuilder.UseMySql(ConnectionString);
+#else
             optionsBuilder.UseMySQL(ConnectionString);
+#endif
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -40,7 +52,11 @@ namespace EntityFrameworkCore.BootKit
         public DbContext4MySql4(DbContextOptions options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if POMELO_MYSQL
+            optionsBuilder.UseMySql(ConnectionString);
+#else
             optionsBuilder.UseMySQL(ConnectionString);
+#endif
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -50,7 +66,11 @@ namespace EntityFrameworkCore.BootKit
         public DbContext4MySql5(DbContextOptions options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if POMELO_MYSQL
+            optionsBuilder.UseMySql(ConnectionString);
+#else
             optionsBuilder.UseMySQL(ConnectionString);
+#endif
             base.OnConfiguring(optionsBuilder);
         }
     }

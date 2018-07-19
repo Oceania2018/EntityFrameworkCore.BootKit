@@ -85,7 +85,7 @@ namespace EntityFrameworkCore.BootKit
 
             var tableType = Utility.GetType(table, Database.Assemblies);
 
-            return dbSet.InvokeMethod("Add", new Object[] { entity });
+            return dbSet.InvokeFunction("Add", new Object[] { entity });
         }
 
         public static object Remove(this Database db, string table, Object entity)
@@ -94,7 +94,7 @@ namespace EntityFrameworkCore.BootKit
 
             var tableType = Utility.GetType(table, Database.Assemblies);
 
-            return dbSet.InvokeMethod("Remove", new Object[] { entity });
+            return dbSet.InvokeFunction("Remove", new Object[] { entity });
         }
     }
 }

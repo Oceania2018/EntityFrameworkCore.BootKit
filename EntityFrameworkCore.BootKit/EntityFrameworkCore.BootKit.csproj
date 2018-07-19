@@ -10,16 +10,20 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>Add GetDefaultDc2 to support multiple database connection config.</Description>
+    <Description>EntityFrameworkCore Boot Kit (EFBK) is a quick start lib for using EntityFrameworkCore.</Description>
     <PackageProjectUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</RepositoryUrl>
     <PackageTags>EntityFramework EntityFrameworkCore Database</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>1.6.3</Version>
-    <PackageReleaseNotes>Add GetDefaultDc2 to support multiple database connection config.</PackageReleaseNotes>
-    <AssemblyVersion>1.6.3.0</AssemblyVersion>
-    <FileVersion>1.6.3.0</FileVersion>
+    <Version>1.7.0</Version>
+    <PackageReleaseNotes>Added POMELO_MYSQL driver.</PackageReleaseNotes>
+    <AssemblyVersion>1.7.0.0</AssemblyVersion>
+    <FileVersion>1.7.0.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;POMELO_MYSQL</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +34,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
   </ItemGroup>
 
 </Project>
