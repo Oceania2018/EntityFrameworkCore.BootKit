@@ -55,6 +55,11 @@ namespace EntityFrameworkCore.BootKit
 
         public static IQueryable<DbRecord> Table(this Database db, string tableName)
         {
+            return Table<DbRecord>(db, tableName);
+        }
+
+        public static IQueryable<TRecord> Table<TRecord>(this Database db, string tableName)
+        {
             var binding = db.GetBinding(tableName);
 
             var tableType = binding.Entities.First(x => x.Name.ToLower().Equals(tableName.ToLower()));
@@ -72,7 +77,7 @@ namespace EntityFrameworkCore.BootKit
                 dc = db.GetReader(tableType);
             }
 
-            var dbSet = (IQueryable<DbRecord>)dc.GetType()
+            var dbSet = (IQueryable<TRecord>)dc.GetType()
                 .GetMethod("Set").MakeGenericMethod(tableType)
                 .Invoke(dc, null);
 
