@@ -45,6 +45,16 @@ namespace EntityFrameworkCore.BootKit.UnitTest
         }
 
         [TestMethod]
+        public void TestPostgreSql()
+        {
+            AddRecord(GetDb(DatabaseType.PostgreSql));
+            AddRecordByTableName(GetDb(DatabaseType.PostgreSql));
+            GetRecordsByTableName(GetDb(DatabaseType.PostgreSql));
+            UpdateRecordsByTableName(GetDb(DatabaseType.PostgreSql));
+            PatchRecord(GetDb(DatabaseType.PostgreSql));
+        }
+
+        [TestMethod]
         public void TestMongoDb()
         {
             var db = GetDb(DatabaseType.MongoDb);
@@ -76,7 +86,7 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             {
                 db.BindDbContext<IDbRecord, DbContext4MySql>(new DatabaseBind
                 {
-                    MasterConnection = new MySqlConnection("Data Source=readreportone.cyby9fnjaodh.us-east-1.rds.amazonaws.com;port=3306;Initial Catalog=GSMP;user id=EC2Live;password=ec2!@smp;CharSet=utf8;Allow User Variables=True;"),
+                    MasterConnection = new MySqlConnection("Data Source=;port=3306;Initial Catalog=;user id=;password=;CharSet=utf8;Allow User Variables=True;"),
                     CreateDbIfNotExist = false
                 });
             }
@@ -85,6 +95,13 @@ namespace EntityFrameworkCore.BootKit.UnitTest
                 db.BindDbContext<INoSqlDbRecord, DbContext4MongoDb>(new DatabaseBind
                 {
                     MasterConnection = new MongoDbConnection("mongodb://user:password@localhost:27017/db"),
+                });
+            }
+            else if (databaseType == DatabaseType.PostgreSql)
+            {
+                db.BindDbContext<INoSqlDbRecord, DbContext4MongoDb>(new DatabaseBind
+                {
+                    MasterConnection = new MongoDbConnection("Server=; Port=5439;User ID=;Password=;Database="),
                 });
             }
 

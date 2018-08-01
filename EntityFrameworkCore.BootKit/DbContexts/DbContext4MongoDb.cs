@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,10 @@ namespace EntityFrameworkCore.BootKit
             MongoClient client = new MongoClient(settings);
 
             IMongoDatabase database = client.GetDatabase(databaseName);
+
+            var pack = new ConventionPack();
+            pack.Add(new IgnoreExtraElementsConvention(true));
+            ConventionRegistry.Register("EntityFrameworkCore.BootKit", pack, t => true);
 
             return database;
         }

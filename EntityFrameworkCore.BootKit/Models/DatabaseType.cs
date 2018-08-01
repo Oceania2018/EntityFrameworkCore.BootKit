@@ -11,6 +11,7 @@ namespace EntityFrameworkCore.BootKit
         SqlServer = 3,
         MySql = 4,
         Oracle = 5,
-        MongoDb = 6
+        MongoDb = 6,
+        PostgreSql = 7
     }
 }
