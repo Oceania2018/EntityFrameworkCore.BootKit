@@ -13,7 +13,8 @@ namespace EntityFrameworkCore.BootKit
         {
             var binding = db.GetBinding(typeof(TTableInterface));
 
-            var permissions = Utility.GetInstanceWithInterface<IRequireDbPermission>(Database.Assemblies);
+            var assemblies = (string[])AppDomain.CurrentDomain.GetData("Assemblies");
+            var permissions = Utility.GetInstanceWithInterface<IRequireDbPermission>(assemblies);
 
             var result = permissions.Any(x => !x.AllowPatch(patch));
 
@@ -88,7 +89,8 @@ namespace EntityFrameworkCore.BootKit
         {
             var dbSet = db.Table(table);
 
-            var tableType = Utility.GetType(table, Database.Assemblies);
+            var assemblies = (string[])AppDomain.CurrentDomain.GetData("Assemblies");
+            var tableType = Utility.GetType(table, assemblies);
 
             return dbSet.InvokeFunction("Add", new Object[] { entity });
         }
@@ -97,7 +99,8 @@ namespace EntityFrameworkCore.BootKit
         {
             var dbSet = db.Table(table);
 
-            var tableType = Utility.GetType(table, Database.Assemblies);
+            var assemblies = (string[])AppDomain.CurrentDomain.GetData("Assemblies");
+            var tableType = Utility.GetType(table, assemblies);
 
             return dbSet.InvokeFunction("Remove", new Object[] { entity });
         }

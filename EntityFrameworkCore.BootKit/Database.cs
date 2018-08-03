@@ -15,10 +15,6 @@ namespace EntityFrameworkCore.BootKit
     {
         internal List<DatabaseBind> DbContextBinds;
 
-        public static String[] Assemblies { get; set; }
-        public static String ContentRootPath { get; set; }
-        public static IConfiguration Configuration { get; set; }
-
         public Database()
         {
             DbContextBinds = new List<DatabaseBind>();
@@ -26,17 +22,32 @@ namespace EntityFrameworkCore.BootKit
 
         internal DatabaseBind GetBinding(Type tableInterface)
         {
-            return DbContextBinds.First(x => (x.TableInterface != null && x.TableInterface.Equals(tableInterface)) || (x.Entities != null && x.Entities.Contains(tableInterface)));
+            var binding = DbContextBinds.FirstOrDefault(x => (x.TableInterface != null && x.TableInterface.Equals(tableInterface)) || (x.Entities != null && x.Entities.Contains(tableInterface)));
+
+            if(binding == null)
+            {
+                throw new Exception($"Can't find binding for interface {tableInterface.ToString()}");
+            }
+
+            return binding;
         }
 
         internal DatabaseBind GetBinding(string tableName)
         {
-            return DbContextBinds.FirstOrDefault(x => x.Entities != null && x.Entities.Select(entity => entity.Name.ToLower()).Contains(tableName.ToLower()));
+            var binding = DbContextBinds.FirstOrDefault(x => x.Entities != null && x.Entities.Select(entity => entity.Name.ToLower()).Contains(tableName.ToLower()));
+
+            if (binding == null)
+            {
+                throw new Exception($"Can't find binding for table {tableName}");
+            }
+
+            return binding;
         }
 
         private List<Type> GetAllEntityTypes(DatabaseBind bind)
         {
-            return Utility.GetClassesWithInterface(bind.TableInterface, Assemblies);
+            var assemblies = (string[])AppDomain.CurrentDomain.GetData("Assemblies");
+            return Utility.GetClassesWithInterface(bind.TableInterface, assemblies);
         }
 
         public void BindDbContext(DatabaseBind bind)

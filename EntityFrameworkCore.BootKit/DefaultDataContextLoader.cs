@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,11 @@ namespace EntityFrameworkCore.BootKit
         {
             var dc = new Database();
 
-            string db = Database.Configuration.GetSection($"{dbConfigSection}:Default").Value;
-            string connectionString = Database.Configuration.GetSection($"{dbConfigSection}:ConnectionStrings")[db];
+            var config = (IConfiguration)AppDomain.CurrentDomain.GetData("Configuration");
+            var contentRootPath = AppDomain.CurrentDomain.GetData("ContentRootPath").ToString();
+
+            string db = config.GetSection($"{dbConfigSection}:Default").Value;
+            string connectionString = config.GetSection($"{dbConfigSection}:ConnectionStrings")[db];
 
             if (db.Equals("SqlServer"))
             {
@@ -36,7 +40,7 @@ namespace EntityFrameworkCore.BootKit
             }
             else if (db.Equals("Sqlite"))
             {
-                connectionString = connectionString.Replace($"|DataDirectory|", Database.ContentRootPath + $"{Path.DirectorySeparatorChar}App_Data{Path.DirectorySeparatorChar}");
+                connectionString = connectionString.Replace($"|DataDirectory|", Path.Join(contentRootPath, "App_Data", Path.DirectorySeparatorChar.ToString()));
                 Console.WriteLine(connectionString);
                 dc.BindDbContext<IDbRecordBinding, DbContext4Sqlite>(new DatabaseBind
                 {
@@ -69,8 +73,10 @@ namespace EntityFrameworkCore.BootKit
         {
             var dc = new Database();
 
-            string db = Database.Configuration.GetSection($"{dbConfigSection}:Default").Value;
-            string connectionString = Database.Configuration.GetSection($"{dbConfigSection}:ConnectionStrings")[db];
+            var config = (IConfiguration)AppDomain.CurrentDomain.GetData("Assemblies");
+            var contentRootPath = AppDomain.CurrentDomain.GetData("ContentRootPath").ToString();
+            string db = config.GetSection($"{dbConfigSection}:Default").Value;
+            string connectionString = config.GetSection($"{dbConfigSection}:ConnectionStrings")[db];
 
             if (db.Equals("SqlServer"))
             {
@@ -82,7 +88,7 @@ namespace EntityFrameworkCore.BootKit
             }
             else if (db.Equals("Sqlite"))
             {
-                connectionString = connectionString.Replace($"|DataDirectory|", Database.ContentRootPath + $"{Path.DirectorySeparatorChar}App_Data{Path.DirectorySeparatorChar}");
+                connectionString = connectionString.Replace($"|DataDirectory|", Path.Join(contentRootPath, "App_Data", Path.DirectorySeparatorChar.ToString()));
                 Console.WriteLine(connectionString);
                 dc.BindDbContext<IDbRecordBinding, DbContext4Sqlite2>(new DatabaseBind
                 {

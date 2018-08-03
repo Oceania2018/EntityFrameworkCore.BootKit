@@ -16,10 +16,10 @@
     <PackageTags>EntityFramework EntityFrameworkCore Database</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>1.7.0</Version>
+    <Version>1.7.2</Version>
     <PackageReleaseNotes>Added POMELO_MYSQL driver.</PackageReleaseNotes>
-    <AssemblyVersion>1.7.0.0</AssemblyVersion>
-    <FileVersion>1.7.0.0</FileVersion>
+    <AssemblyVersion>1.7.2.0</AssemblyVersion>
+    <FileVersion>1.7.2.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

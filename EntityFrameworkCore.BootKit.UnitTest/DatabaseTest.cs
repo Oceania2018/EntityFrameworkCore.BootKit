@@ -54,7 +54,7 @@ namespace EntityFrameworkCore.BootKit.UnitTest
         private Database GetDb(DatabaseType databaseType)
         {
             var db = new Database();
-            Database.Assemblies = new string[] { "EntityFrameworkCore.BootKit.UnitTest" };
+            AppDomain.CurrentDomain.SetData("Assemblies", new string[] { "EntityFrameworkCore.BootKit.UnitTest" });
 
             if (databaseType == DatabaseType.Sqlite)
             {

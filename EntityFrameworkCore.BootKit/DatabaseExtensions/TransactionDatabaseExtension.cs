@@ -9,18 +9,44 @@ namespace EntityFrameworkCore.BootKit
     {
         public static int Transaction<TTableInterface>(this Database db, Action action)
         {
-            using (IDbContextTransaction transaction = db.GetMaster(typeof(TTableInterface)).Database.BeginTransaction())
+            var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
+            int affected = 0;
+
+            if (masterDb.CurrentTransaction == null)
             {
-                int affected = 0;
+                using (IDbContextTransaction transaction = masterDb.BeginTransaction())
+                {
+                    try
+                    {
+                        action();
+                        affected = db.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        if (ex.Message.Contains("See the inner exception for details"))
+                        {
+                            throw ex.InnerException;
+                        }
+                        else
+                        {
+                            throw ex;
+                        }
+                    }
+
+                    return affected;
+                }
+            }
+            else
+            {
                 try
                 {
                     action();
                     affected = db.SaveChanges();
-                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
-                    transaction.Rollback();
                     if (ex.Message.Contains("See the inner exception for details"))
                     {
                         throw ex.InnerException;
