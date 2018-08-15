@@ -40,7 +40,7 @@ namespace EntityFrameworkCore.BootKit
             }
             else if (db.Equals("Sqlite"))
             {
-                connectionString = connectionString.Replace($"|DataDirectory|", Path.Join(contentRootPath, "App_Data", Path.DirectorySeparatorChar.ToString()));
+                connectionString = connectionString.Replace($"|DataDirectory|", Path.Combine(contentRootPath, "App_Data", Path.DirectorySeparatorChar.ToString()));
                 Console.WriteLine(connectionString);
                 dc.BindDbContext<IDbRecordBinding, DbContext4Sqlite>(new DatabaseBind
                 {
@@ -88,7 +88,7 @@ namespace EntityFrameworkCore.BootKit
             }
             else if (db.Equals("Sqlite"))
             {
-                connectionString = connectionString.Replace($"|DataDirectory|", Path.Join(contentRootPath, "App_Data", Path.DirectorySeparatorChar.ToString()));
+                connectionString = connectionString.Replace($"|DataDirectory|", Path.Combine(contentRootPath, "App_Data", Path.DirectorySeparatorChar.ToString()));
                 Console.WriteLine(connectionString);
                 dc.BindDbContext<IDbRecordBinding, DbContext4Sqlite2>(new DatabaseBind
                 {

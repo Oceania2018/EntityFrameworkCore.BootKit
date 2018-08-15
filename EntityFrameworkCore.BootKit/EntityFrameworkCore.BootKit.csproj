@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Label="Globals">
     <SccProjectName>SAK</SccProjectName>
@@ -8,18 +8,20 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>EntityFrameworkCore Boot Kit (EFBK) is a quick start database connecter for using EntityFrameworkCore.</Description>
+    <Description>EntityFrameworkCore Boot Kit (EFBK) is a quick start database connecter for using EntityFrameworkCore.
+Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, MongoDb, Amazon Redshift and Memory database.</Description>
     <PackageProjectUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</RepositoryUrl>
     <PackageTags>EntityFramework EntityFrameworkCore Database</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>1.8.0</Version>
-    <PackageReleaseNotes>Added PostgreSQL driver.</PackageReleaseNotes>
-    <AssemblyVersion>1.8.0.0</AssemblyVersion>
-    <FileVersion>1.8.0.0</FileVersion>
+    <Version>1.9.0</Version>
+    <PackageReleaseNotes>Added Amazon Redshift data context.
+Change to .Net Standard Library.</PackageReleaseNotes>
+    <AssemblyVersion>1.9.0.0</AssemblyVersion>
+    <FileVersion>1.9.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

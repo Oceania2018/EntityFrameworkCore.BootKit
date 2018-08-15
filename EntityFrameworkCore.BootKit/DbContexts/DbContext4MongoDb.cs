@@ -34,8 +34,8 @@ namespace EntityFrameworkCore.BootKit
 
             string server = new Regex("@.+/").Match(ConnectionString).Value.Substring(1);
             string host = server.Split(':').First();
-            string userName = new Regex("//[^@]+").Match(ConnectionString).Value.Split(":").First().Substring(2);
-            string password = new Regex("//[^@]+").Match(ConnectionString).Value.Split(":").Last();
+            string userName = new Regex("//[^@]+").Match(ConnectionString).Value.Split(':').First().Substring(2);
+            string password = new Regex("//[^@]+").Match(ConnectionString).Value.Split(':').Last();
 
             MongoCredential credential = MongoCredential.CreateCredential(databaseName, userName, password);
             settings.Credential = credential;
@@ -81,8 +81,8 @@ namespace EntityFrameworkCore.BootKit
 
             string server = new Regex("@.+/").Match(ConnectionString).Value.Substring(1);
             string host = server.Split(':').First();
-            string userName = new Regex("//[^@]+").Match(ConnectionString).Value.Split(":").First().Substring(2);
-            string password = new Regex("//[^@]+").Match(ConnectionString).Value.Split(":").Last();
+            string userName = new Regex("//[^@]+").Match(ConnectionString).Value.Split(':').First().Substring(2);
+            string password = new Regex("//[^@]+").Match(ConnectionString).Value.Split(':').Last();
 
             MongoCredential credential = MongoCredential.CreateCredential(databaseName, userName, password);
             settings.Credential = credential;
