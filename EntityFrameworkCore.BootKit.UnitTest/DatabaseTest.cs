@@ -1,8 +1,10 @@
+using EntityFrameworkCore.BootKit.DbContexts;
 using EntityFrameworkCore.BootKit.UnitTest.Tables;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -55,6 +57,16 @@ namespace EntityFrameworkCore.BootKit.UnitTest
         }
 
         [TestMethod]
+        public void TestRedshift()
+        {
+            AddRecord(GetDb(DatabaseType.Redshift));
+            AddRecordByTableName(GetDb(DatabaseType.Redshift));
+            GetRecordsByTableName(GetDb(DatabaseType.Redshift));
+            UpdateRecordsByTableName(GetDb(DatabaseType.Redshift));
+            PatchRecord(GetDb(DatabaseType.Redshift));
+        }
+
+        [TestMethod]
         public void TestMongoDb()
         {
             var db = GetDb(DatabaseType.MongoDb);
@@ -99,9 +111,16 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             }
             else if (databaseType == DatabaseType.PostgreSql)
             {
-                db.BindDbContext<INoSqlDbRecord, DbContext4MongoDb>(new DatabaseBind
+                db.BindDbContext<IDbRecord, DbContext4PostgreSql>(new DatabaseBind
                 {
-                    MasterConnection = new MongoDbConnection("Server=; Port=5439;User ID=;Password=;Database="),
+                    MasterConnection = new NpgsqlConnection("Server=; Port=5439;User ID=;Password=;Database=;SSL Mode=Require;Trust Server Certificate=True;Use SSL Stream=True"),
+                });
+            }
+            else if (databaseType == DatabaseType.Redshift)
+            {
+                db.BindDbContext<IDbRecord, DbContext4PostgreSql>(new DatabaseBind
+                {
+                    MasterConnection = new NpgsqlConnection("Server=*.us-east-1.redshift.amazonaws.com; Port=5439;User ID=;Password=;Database=;Server Compatibility Mode=Redshift;SSL Mode=Require;Trust Server Certificate=True;Use SSL Stream=True"),
                 });
             }
 

@@ -1,6 +1,8 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using EntityFrameworkCore.BootKit.DbContexts;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -40,8 +42,7 @@ namespace EntityFrameworkCore.BootKit
             }
             else if (db.Equals("Sqlite"))
             {
-                connectionString = connectionString.Replace($"|DataDirectory|", Path.Combine(contentRootPath, "App_Data", Path.DirectorySeparatorChar.ToString()));
-                Console.WriteLine(connectionString);
+                connectionString = connectionString.Replace($"|DataDirectory|", Path.Combine(contentRootPath, "App_Data") + Path.DirectorySeparatorChar.ToString());
                 dc.BindDbContext<IDbRecordBinding, DbContext4Sqlite>(new DatabaseBind
                 {
                     MasterConnection = new SqliteConnection(connectionString),
@@ -59,10 +60,27 @@ namespace EntityFrameworkCore.BootKit
                     CreateDbIfNotExist = true
                 });
             }
+            else if (db.Equals("PostgreSql"))
+            {
+                dc.BindDbContext<IDbRecordBinding, DbContext4PostgreSql>(new DatabaseBind
+                {
+                    MasterConnection = new NpgsqlConnection("Server=; Port=5439;User ID=;Password=;Database=;SSL Mode=Require;Trust Server Certificate=True;Use SSL Stream=True"),
+                    CreateDbIfNotExist = true
+                });
+            }
+            else if (db.Equals("Redshift"))
+            {
+                dc.BindDbContext<IDbRecordBinding, DbContext4PostgreSql>(new DatabaseBind
+                {
+                    MasterConnection = new NpgsqlConnection("Server=*.us-east-1.redshift.amazonaws.com; Port=5439;User ID=;Password=;Database=;Server Compatibility Mode=Redshift;SSL Mode=Require;Trust Server Certificate=True;Use SSL Stream=True"),
+                    CreateDbIfNotExist = true
+                });
+            }
             else if (db.Equals("InMemory"))
             {
                 dc.BindDbContext<IDbRecordBinding, DbContext4Memory>(new DatabaseBind
                 {
+                    CreateDbIfNotExist = true
                 });
             }
 

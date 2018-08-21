@@ -12,6 +12,7 @@ namespace EntityFrameworkCore.BootKit
         MySql = 4,
         Oracle = 5,
         MongoDb = 6,
-        PostgreSql = 7
+        PostgreSql = 7,
+        Redshift = 8
     }
 }
