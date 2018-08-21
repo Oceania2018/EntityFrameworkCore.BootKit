@@ -128,3 +128,6 @@ How to use
   });
 
 
+Documentation
+*************
+https://entityframeworkcorebootkit.readthedocs.io
