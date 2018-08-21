@@ -121,9 +121,10 @@ How to use
 
 ::
 
-  db.BindDbContext<IDbRecord, DbContext4PostgreSql>(new DatabaseBind
+  db.BindDbContext<IDbRecord, DbContext4Redshift>(new DatabaseBind
   {
-      MasterConnection = new NpgsqlConnection("Server=*.us-east-1.redshift.amazonaws.com; Port=5439;User ID=;Password=;Database=;Server Compatibility Mode=Redshift;SSL Mode=Require;Trust Server Certificate=True;Use SSL Stream=True"),
+      string connString = "Server=*.us-east-1.redshift.amazonaws.com; Port=5439;User ID=;Password=;Database=;Server Compatibility Mode=Redshift;SSL Mode=Require;Trust Server Certificate=True;Use SSL Stream=True";
+      MasterConnection = new NpgsqlConnection(connString),
   });
 
 
