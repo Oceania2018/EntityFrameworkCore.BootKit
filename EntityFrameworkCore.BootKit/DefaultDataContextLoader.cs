@@ -60,6 +60,14 @@ namespace EntityFrameworkCore.BootKit
                     CreateDbIfNotExist = true
                 });
             }
+            else if (db.Equals("Aurora"))
+            {
+                dc.BindDbContext<IDbRecordBinding, DbContext4Aurora>(new DatabaseBind
+                {
+                    MasterConnection = new MySqlConnection(connectionString),
+                    CreateDbIfNotExist = true
+                });
+            }
             else if (db.Equals("PostgreSql"))
             {
                 dc.BindDbContext<IDbRecordBinding, DbContext4PostgreSql>(new DatabaseBind
