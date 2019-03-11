@@ -52,8 +52,6 @@ namespace EntityFrameworkCore.BootKit
 
             return database;
         }
-
-
     }
 
     public class DbContext4MongoDb2 : DataContext

@@ -1,6 +1,6 @@
 # EntityFrameworkCore.BootKit
 
-[![Join the chat at https://gitter.im/publiclab/publiclab](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sci-sharp/community)[![Documentation Status](https://readthedocs.org/projects/entityframeworkcorebootkit/badge/?version=latest)](https://tensorflownet.readthedocs.io/en/latest/?badge=latest)[![NuGet](https://img.shields.io/nuget/dt/EntityFrameworkCore.BootKit.svg)](https://www.nuget.org/packages/EntityFrameworkCore.BootKit)
+[![Join the chat at https://gitter.im/publiclab/publiclab](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sci-sharp/community) [![Documentation Status](https://readthedocs.org/projects/entityframeworkcorebootkit/badge/?version=latest)](https://tensorflownet.readthedocs.io/en/latest/?badge=latest) [![NuGet](https://img.shields.io/nuget/dt/EntityFrameworkCore.BootKit.svg)](https://www.nuget.org/packages/EntityFrameworkCore.BootKit)
 
 EntityFrameworkCore Boot Kit (EFBK) is a quick start database connect library for using .NET EntityFrameworkCore.
 

@@ -12,16 +12,16 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>EntityFrameworkCore Boot Kit (EFBK) is a quick start database connecter for using EntityFrameworkCore.
 Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, MongoDb, Amazon Redshift, AWS Aurora and Memory database.</Description>
-    <PackageProjectUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Haiping-Chen/EntityFrameworkCore.BootKit</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Oceania2018/EntityFrameworkCore.BootKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Oceania2018/EntityFrameworkCore.BootKit</RepositoryUrl>
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>1.11.0</Version>
-    <PackageReleaseNotes>Upgrade database driver.
-Added AWS Aurora.</PackageReleaseNotes>
-    <AssemblyVersion>1.11.0.0</AssemblyVersion>
-    <FileVersion>1.11.0.0</FileVersion>
+    <Version>1.12.0</Version>
+    <PackageReleaseNotes>Upgrade database drivers.
+Downgrade MongoDB driver to 2.6.1</PackageReleaseNotes>
+    <AssemblyVersion>1.12.0.0</AssemblyVersion>
+    <FileVersion>1.12.0.0</FileVersion>
     <Copyright>Apache 2.0</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/44989469?s=200&amp;v=4</PackageIconUrl>
@@ -33,14 +33,14 @@ Added AWS Aurora.</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="EntityFrameworkCore.Triggers" Version="1.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.9.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.7.2" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.14" />
-    <PackageReference Include="Npgsql" Version="4.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.6.1" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.15" />
+    <PackageReference Include="Npgsql" Version="4.0.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
   </ItemGroup>
 
