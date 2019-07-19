@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -98,15 +99,35 @@ namespace EntityFrameworkCore.BootKit
 
                 DbContextOptions options = new DbContextOptions<DataContext>();
 
-                DataContext dbContext = Activator.CreateInstance(binding.DbContextType, options) as DataContext;
-                dbContext.ConnectionString = (binding.SlaveConnections == null || binding.SlaveConnections.Count == 0) ? binding.MasterConnection.ConnectionString : binding.SlaveConnections.First().ConnectionString;
-                dbContext.EntityTypes = binding.Entities;
-                binding.DbContextSlavers.Add(dbContext);
+                if (binding.SlaveConnections == null || binding.SlaveConnections.Count == 0)
+                {
+                    DataContext dbContext = Activator.CreateInstance(binding.DbContextType, options) as DataContext;
+
+                    dbContext.ConnectionString = binding.MasterConnection.ConnectionString;
+                    dbContext.EntityTypes = binding.Entities;
+                    binding.DbContextSlavers.Add(dbContext);
+                }
+                else
+                {
+                    binding.SlaveConnections.ForEach(slaveConn =>
+                    {
+                        DataContext dbContext = Activator.CreateInstance(binding.DbContextType, options) as DataContext;
+                        dbContext.ConnectionString = slaveConn.ConnectionString;
+                        dbContext.EntityTypes = binding.Entities;
+                        binding.DbContextSlavers.Add(dbContext);
+                    });
+                }
             }
 
             int slaver = new Random().Next(binding.DbContextSlavers.Count);
 
-            return binding.DbContextSlavers.First();
+            return binding.DbContextSlavers[slaver];
+        }
+
+        private string RandomConn(List<DbConnection> connetions)
+        {
+            int idx = new Random().Next(connetions.Count);
+            return connetions[idx].ConnectionString;
         }
 
         /*public IMongoCollection<T> Collection<T>(string collection) where T : class
