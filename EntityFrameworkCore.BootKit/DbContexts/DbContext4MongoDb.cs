@@ -26,9 +26,9 @@ namespace EntityFrameworkCore.BootKit
 
         public IMongoDatabase GetDatabase()
         {
-            string databaseName = ConnectionString.Split('/').Last();
+            string databaseName = ConnectionString.Split('/').Last().Split('?').First();
 
-            MongoClientSettings settings = new MongoClientSettings();
+            /*MongoClientSettings settings = new MongoClientSettings();
             settings.ConnectTimeout = new TimeSpan(0, 0, 0, 30, 0);
             settings.ConnectionMode = ConnectionMode.Direct;
 
@@ -40,9 +40,9 @@ namespace EntityFrameworkCore.BootKit
             MongoCredential credential = MongoCredential.CreateCredential(databaseName, userName, password);
             settings.Credential = credential;
 
-            settings.Server = new MongoServerAddress(host);
+            settings.Server = new MongoServerAddress(host);*/
 
-            MongoClient client = new MongoClient(settings);
+            MongoClient client = new MongoClient(ConnectionString);
 
             IMongoDatabase database = client.GetDatabase(databaseName);
 

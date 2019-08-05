@@ -17,10 +17,12 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>1.14.1</Version>
-    <PackageReleaseNotes>Upgrade database drivers.</PackageReleaseNotes>
-    <AssemblyVersion>1.14.1.0</AssemblyVersion>
-    <FileVersion>1.14.1.0</FileVersion>
+    <Version>1.14.2</Version>
+    <PackageReleaseNotes>1. Upgrade database drivers.
+2. Create MongoClient through ConnectionString.
+</PackageReleaseNotes>
+    <AssemblyVersion>1.14.2.0</AssemblyVersion>
+    <FileVersion>1.14.2.0</FileVersion>
     <Copyright>Apache 2.0</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/44989469?s=200&amp;v=4</PackageIconUrl>
@@ -38,7 +40,7 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
     <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.16" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.17" />
     <PackageReference Include="Npgsql" Version="4.0.8" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.4" />
   </ItemGroup>
