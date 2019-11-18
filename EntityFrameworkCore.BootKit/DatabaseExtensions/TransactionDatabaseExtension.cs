@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,9 @@ namespace EntityFrameworkCore.BootKit
 {
     public static class TransactionDatabaseExtension
     {
+        public static DatabaseFacade GetDatabaseFacade<TTableInterface>(this Database db)
+            => db.GetMaster(typeof(TTableInterface)).Database;
+
         public static int Transaction<TTableInterface>(this Database db, Action action)
         {
             var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
