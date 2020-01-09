@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Microsoft.EntityFrameworkCore.Storage;
-using Remotion.Linq.Parsing.Structure;
+﻿using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace EntityFrameworkCore.BootKit
 {
@@ -24,7 +23,7 @@ namespace EntityFrameworkCore.BootKit
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public static string ToSql<T>(this IQueryable<T> query)
+        public static string ToSql<TEntity>(this IQueryable<TEntity> query)
         {
             var str = query.ToString();
             var provider = query.Provider;
@@ -32,18 +31,17 @@ namespace EntityFrameworkCore.BootKit
             var properties = typeof(EntityQueryProvider).GetTypeInfo().DeclaredProperties;
             try
             {
-                var queryCompiler = QueryCompilerField.GetValue(query.Provider);
-                var nodeTypeProvider = (INodeTypeProvider)NodeTypeProviderField.GetValue(queryCompiler);
-                var parser = (IQueryParser)CreateQueryParserMethod.Invoke(queryCompiler, new object[] { nodeTypeProvider });
-                var queryModel = parser.GetParsedQuery(query.Expression);
-                var database = DataBaseField.GetValue(queryCompiler);
-                var databaseDependencies = (DatabaseDependencies)DatabaseDependenciesProperty.GetValue(database);
-                var queryCompilationContextFactory = databaseDependencies.QueryCompilationContextFactory;
-                var queryCompilationContext = queryCompilationContextFactory.Create(false);
-                var modelVisitor = (RelationalQueryModelVisitor)queryCompilationContext.CreateQueryModelVisitor();
-                modelVisitor.CreateQueryExecutor<T>(queryModel);
-                var sql = modelVisitor.Queries.First().ToString();
-
+                var enumerator = query.Provider
+                    .Execute<IEnumerable<TEntity>>(query.Expression)
+                    .GetEnumerator();
+                var enumeratorType = enumerator.GetType();
+                var selectFieldInfo = enumeratorType.GetField("_selectExpression", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException($"cannot find field _selectExpression on type {enumeratorType.Name}");
+                var sqlGeneratorFieldInfo = enumeratorType.GetField("_querySqlGeneratorFactory", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException($"cannot find field _querySqlGeneratorFactory on type {enumeratorType.Name}");
+                var selectExpression = selectFieldInfo.GetValue(enumerator) as SelectExpression ?? throw new InvalidOperationException($"could not get SelectExpression");
+                var factory = sqlGeneratorFieldInfo.GetValue(enumerator) as IQuerySqlGeneratorFactory ?? throw new InvalidOperationException($"could not get IQuerySqlGeneratorFactory");
+                var sqlGenerator = factory.Create();
+                var command = sqlGenerator.GetCommand(selectExpression);
+                var sql = command.CommandText;
                 return sql;
             }
             catch (Exception ex)

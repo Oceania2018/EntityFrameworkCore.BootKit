@@ -1,5 +1,6 @@
 using EntityFrameworkCore.BootKit.DbContexts;
 using EntityFrameworkCore.BootKit.UnitTest.Tables;
+using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,7 +8,6 @@ using MySql.Data.MySqlClient;
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 

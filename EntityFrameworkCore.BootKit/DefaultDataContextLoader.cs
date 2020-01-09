@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkCore.BootKit.DbContexts;
+using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
