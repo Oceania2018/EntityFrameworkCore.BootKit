@@ -10,7 +10,7 @@ namespace EntityFrameworkCore.BootKit
         public DbContext4Aurora(DbContextOptions options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(ConnectionString);
+            optionsBuilder.UseMySql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -20,7 +20,7 @@ namespace EntityFrameworkCore.BootKit
         public DbContext4Aurora2(DbContextOptions options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(ConnectionString);
+            optionsBuilder.UseMySql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -30,7 +30,7 @@ namespace EntityFrameworkCore.BootKit
         public DbContext4Aurora3(DbContextOptions options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(ConnectionString);
+            optionsBuilder.UseMySql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
     }
