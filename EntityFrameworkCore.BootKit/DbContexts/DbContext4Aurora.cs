@@ -7,9 +7,12 @@ namespace EntityFrameworkCore.BootKit
 {
     public class DbContext4Aurora : DataContext
     {
-        public DbContext4Aurora(DbContextOptions options) : base(options) { }
+        public DbContext4Aurora(DbContextOptions options, IServiceProvider serviceProvider)
+            : base(options, serviceProvider) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            SetLog(optionsBuilder);
             optionsBuilder.UseMySql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
@@ -17,9 +20,12 @@ namespace EntityFrameworkCore.BootKit
 
     public class DbContext4Aurora2 : DataContext
     {
-        public DbContext4Aurora2(DbContextOptions options) : base(options) { }
+        public DbContext4Aurora2(DbContextOptions options, IServiceProvider serviceProvider)
+            : base(options, serviceProvider) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            SetLog(optionsBuilder);
             optionsBuilder.UseMySql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
@@ -27,9 +33,12 @@ namespace EntityFrameworkCore.BootKit
 
     public class DbContext4Aurora3 : DataContext
     {
-        public DbContext4Aurora3(DbContextOptions options) : base(options) { }
+        public DbContext4Aurora3(DbContextOptions options, IServiceProvider serviceProvider)
+            : base(options, serviceProvider) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            SetLog(optionsBuilder);
             optionsBuilder.UseMySql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }

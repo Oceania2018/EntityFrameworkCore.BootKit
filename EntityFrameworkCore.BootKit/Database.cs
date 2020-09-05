@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -65,12 +62,16 @@ namespace EntityFrameworkCore.BootKit
 
             bind.Entities = GetAllEntityTypes(bind).ToList();
 
+            if (bind.SlaveConnections == null || bind.SlaveConnections.Count == 0)
+                bind.SlaveConnections.Add(bind.MasterConnection);
+
+            // random
+            bind.SlaveId = new Random().Next(bind.SlaveConnections.Count);
+
             DbContextBinds.Add(bind);
 
             if (bind.CreateDbIfNotExist)
-            {
                 GetMaster(bind.TableInterface).Database.EnsureCreated();
-            }
         }
 
         public DataContext GetMaster(Type tableInterface)
@@ -80,7 +81,7 @@ namespace EntityFrameworkCore.BootKit
             if (binding.DbContextMaster == null)
             {
                 DbContextOptions options = new DbContextOptions<DataContext>();
-                DataContext dbContext = Activator.CreateInstance(binding.DbContextType, options) as DataContext;
+                DataContext dbContext = Activator.CreateInstance(binding.DbContextType, options, binding.ServiceProvider) as DataContext;
                 dbContext.ConnectionString = binding.MasterConnection.ConnectionString;
                 dbContext.EntityTypes = binding.Entities;
                 binding.DbContextMaster = dbContext;
@@ -93,35 +94,22 @@ namespace EntityFrameworkCore.BootKit
         {
             var binding = GetBinding(tableInterface);
 
-            if (binding.DbContextSlavers == null)
+            if (binding.DbContextSlaver == null)
             {
-                binding.DbContextSlavers = new List<DataContext>();
-
                 DbContextOptions options = new DbContextOptions<DataContext>();
 
-                if (binding.SlaveConnections == null || binding.SlaveConnections.Count == 0)
-                {
-                    DataContext dbContext = Activator.CreateInstance(binding.DbContextType, options) as DataContext;
+                DataContext dbContext = Activator.CreateInstance(binding.DbContextType, options, binding.ServiceProvider) as DataContext;
+                dbContext.EntityTypes = binding.Entities;
 
+                if (binding.SlaveConnections == null || binding.SlaveConnections.Count == 0)
                     dbContext.ConnectionString = binding.MasterConnection.ConnectionString;
-                    dbContext.EntityTypes = binding.Entities;
-                    binding.DbContextSlavers.Add(dbContext);
-                }
                 else
-                {
-                    binding.SlaveConnections.ForEach(slaveConn =>
-                    {
-                        DataContext dbContext = Activator.CreateInstance(binding.DbContextType, options) as DataContext;
-                        dbContext.ConnectionString = slaveConn.ConnectionString;
-                        dbContext.EntityTypes = binding.Entities;
-                        binding.DbContextSlavers.Add(dbContext);
-                    });
-                }
+                    dbContext.ConnectionString = binding.SlaveConnection.ConnectionString;
+
+                binding.DbContextSlaver = dbContext;
             }
 
-            int slaver = new Random().Next(binding.DbContextSlavers.Count);
-
-            return binding.DbContextSlavers[slaver];
+            return binding.DbContextSlaver;
         }
 
         private string RandomConn(List<DbConnection> connetions)

@@ -10,9 +10,12 @@ namespace EntityFrameworkCore.BootKit
     /// </summary>
     public class DbContext4Memory : DataContext
     {
-        public DbContext4Memory(DbContextOptions options) : base(options) { }
+        public DbContext4Memory(DbContextOptions options, IServiceProvider serviceProvider)
+            : base(options, serviceProvider) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            SetLog(optionsBuilder);
             optionsBuilder.UseInMemoryDatabase(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }

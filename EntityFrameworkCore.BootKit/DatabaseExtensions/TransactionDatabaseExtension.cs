@@ -10,6 +10,29 @@ namespace EntityFrameworkCore.BootKit
     {
         public static DatabaseFacade GetDatabaseFacade<TTableInterface>(this Database db)
             => db.GetMaster(typeof(TTableInterface)).Database;
+        public static IDbContextTransaction BeginTransaction<TTableInterface>(this Database db)
+        {
+            var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
+            return masterDb.BeginTransaction();
+        }
+
+        public static void EndTransaction<TTableInterface>(this Database db)
+        {
+            var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
+            try
+            {
+                db.SaveChanges();
+                masterDb.CurrentTransaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                masterDb.CurrentTransaction.Rollback();
+                if (ex.Message.Contains("See the inner exception for details"))
+                    throw ex.InnerException;
+                else
+                    throw ex;
+            }
+        }
 
         public static int Transaction<TTableInterface>(this Database db, Action action)
         {
@@ -18,7 +41,7 @@ namespace EntityFrameworkCore.BootKit
 
             if (masterDb.CurrentTransaction == null)
             {
-                using (IDbContextTransaction transaction = masterDb.BeginTransaction())
+                using (var transaction = masterDb.BeginTransaction())
                 {
                     try
                     {
@@ -30,13 +53,9 @@ namespace EntityFrameworkCore.BootKit
                     {
                         transaction.Rollback();
                         if (ex.Message.Contains("See the inner exception for details"))
-                        {
                             throw ex.InnerException;
-                        }
                         else
-                        {
                             throw ex;
-                        }
                     }
 
                     return affected;
@@ -52,13 +71,9 @@ namespace EntityFrameworkCore.BootKit
                 catch (Exception ex)
                 {
                     if (ex.Message.Contains("See the inner exception for details"))
-                    {
                         throw ex.InnerException;
-                    }
                     else
-                    {
                         throw ex;
-                    }
                 }
 
                 return affected;
@@ -80,13 +95,9 @@ namespace EntityFrameworkCore.BootKit
                 {
                     transaction.Rollback();
                     if (ex.Message.Contains("See the inner exception for details"))
-                    {
                         throw ex.InnerException;
-                    }
                     else
-                    {
                         throw ex;
-                    }
                 }
 
                 return result;

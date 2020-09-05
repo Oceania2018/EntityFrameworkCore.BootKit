@@ -11,10 +11,12 @@ namespace EntityFrameworkCore.BootKit
 {
     public class DbContext4MongoDb : DataContext
     {
-        public DbContext4MongoDb(DbContextOptions options) : base(options) { }
+        public DbContext4MongoDb(DbContextOptions options, IServiceProvider serviceProvider)
+            : base(options, serviceProvider) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            SetLog(optionsBuilder);
             optionsBuilder.UseMongoDb(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
@@ -56,10 +58,12 @@ namespace EntityFrameworkCore.BootKit
 
     public class DbContext4MongoDb2 : DataContext
     {
-        public DbContext4MongoDb2(DbContextOptions options) : base(options) { }
+        public DbContext4MongoDb2(DbContextOptions options, IServiceProvider serviceProvider)
+            : base(options, serviceProvider) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            SetLog(optionsBuilder);
             optionsBuilder.UseMongoDb(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }

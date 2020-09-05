@@ -7,9 +7,12 @@ namespace EntityFrameworkCore.BootKit.DbContexts
 {
     public class DbContext4Redshift : DataContext
     {
-        public DbContext4Redshift(DbContextOptions options) : base(options) { }
+        public DbContext4Redshift(DbContextOptions options, IServiceProvider serviceProvider)
+            : base(options, serviceProvider) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            SetLog(optionsBuilder);
             optionsBuilder.UseNpgsql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }

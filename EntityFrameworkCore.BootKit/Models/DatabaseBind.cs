@@ -10,8 +10,10 @@ namespace EntityFrameworkCore.BootKit
         public DbConnection MasterConnection { get; set; }
         public DataContext DbContextMaster { get; set; }
 
+        public int SlaveId { get; set; }
         public List<DbConnection> SlaveConnections { get; set; }
-        public List<DataContext> DbContextSlavers { get; set; }
+        public DbConnection SlaveConnection => SlaveConnections[SlaveId];
+        public DataContext DbContextSlaver { get; set; }
 
         public Type TableInterface { get; set; }
 
@@ -20,5 +22,6 @@ namespace EntityFrameworkCore.BootKit
         public List<Type> Entities { get; set; }
 
         public Boolean CreateDbIfNotExist { get; set; }
+        public IServiceProvider ServiceProvider { get; set; }
     }
 }
