@@ -13,7 +13,8 @@ namespace EntityFrameworkCore.BootKit.DbContexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseNpgsql(ConnectionString);
+            optionsBuilder.UseNpgsql(ConnectionString,
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -26,7 +27,8 @@ namespace EntityFrameworkCore.BootKit.DbContexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseNpgsql(ConnectionString);
+            optionsBuilder.UseNpgsql(ConnectionString,
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -39,7 +41,8 @@ namespace EntityFrameworkCore.BootKit.DbContexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseNpgsql(ConnectionString);
+            optionsBuilder.UseNpgsql(ConnectionString,
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }

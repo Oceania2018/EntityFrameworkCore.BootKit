@@ -13,7 +13,17 @@ namespace EntityFrameworkCore.BootKit
         public static IDbContextTransaction BeginTransaction<TTableInterface>(this Database db)
         {
             var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
-            return masterDb.BeginTransaction();
+            if (masterDb.CurrentTransaction == null)
+                return masterDb.BeginTransaction();
+            else
+                return masterDb.CurrentTransaction;
+        }
+
+        public static void RollbackTransaction<TTableInterface>(this Database db)
+        {
+            var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
+            if (masterDb.CurrentTransaction != null)
+                masterDb.RollbackTransaction();
         }
 
         public static void EndTransaction<TTableInterface>(this Database db)
@@ -57,8 +67,6 @@ namespace EntityFrameworkCore.BootKit
                         else
                             throw ex;
                     }
-
-                    return affected;
                 }
             }
             else
@@ -70,14 +78,17 @@ namespace EntityFrameworkCore.BootKit
                 }
                 catch (Exception ex)
                 {
+                    if (masterDb.CurrentTransaction != null)
+                        masterDb.CurrentTransaction.Rollback();
+
                     if (ex.Message.Contains("See the inner exception for details"))
                         throw ex.InnerException;
                     else
                         throw ex;
                 }
-
-                return affected;
             }
+
+            return affected;
         }
 
         public static TResult Transaction<T, TResult>(this Database db, Func<TResult> action)
@@ -116,7 +127,18 @@ namespace EntityFrameworkCore.BootKit
 
         public static IDbContextTransaction GetDbContextTransaction<T>(this Database db)
         {
-            return db.GetMaster(typeof(T)).Database.BeginTransaction();
+            var masterDb = db.GetMaster(typeof(T)).Database;
+
+            if (masterDb.CurrentTransaction == null)
+                return masterDb.BeginTransaction();
+            else
+                return masterDb.CurrentTransaction;
+        }
+
+        public static bool IsTransactionOpen<T>(this Database db)
+        {
+            var masterDb = db.GetMaster(typeof(T)).Database;
+            return masterDb.CurrentTransaction != null;
         }
     }
 }

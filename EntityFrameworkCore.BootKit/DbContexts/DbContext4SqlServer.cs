@@ -15,7 +15,8 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder.UseSqlServer(ConnectionString,
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -28,7 +29,8 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder.UseSqlServer(ConnectionString, 
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -41,7 +43,8 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder.UseSqlServer(ConnectionString,
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -54,7 +57,8 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder.UseSqlServer(ConnectionString,
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -67,7 +71,8 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder.UseSqlServer(ConnectionString,
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
