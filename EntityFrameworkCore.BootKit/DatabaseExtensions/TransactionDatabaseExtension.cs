@@ -29,6 +29,9 @@ namespace EntityFrameworkCore.BootKit
         public static void EndTransaction<TTableInterface>(this Database db)
         {
             var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
+            // current transaction will be null if it's been rollbacked.
+            if (masterDb.CurrentTransaction == null)
+                return;
             try
             {
                 db.SaveChanges();
