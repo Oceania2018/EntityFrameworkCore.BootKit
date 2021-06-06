@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Text;
+using System.Reflection;
+using System.Linq;
 
 namespace EntityFrameworkCore.BootKit
 {
@@ -39,6 +39,9 @@ namespace EntityFrameworkCore.BootKit
                 {
                     modelBuilder.Model.AddEntityType(type);
                 }
+
+                if (type.GetCustomAttributes(typeof(HasNoKeyAttribute)).Any())
+                    modelBuilder.Entity(type).HasNoKey();
             });
 
             base.OnModelCreating(modelBuilder);
