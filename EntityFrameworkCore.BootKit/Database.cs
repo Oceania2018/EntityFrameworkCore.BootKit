@@ -192,12 +192,20 @@ namespace EntityFrameworkCore.BootKit
 
         public int SaveChanges()
         {
-            DatabaseBind binding = DbContextBinds.Where(x => x.DbContextType != null).FirstOrDefault(x => x.DbContextMaster != null);
-            if (binding.DbContextMaster.Database.CurrentTransaction == null)
+            var bindings = DbContextBinds.Where(x => x.DbContextType != null).Where(x => x.DbContextMaster != null);
+            if (bindings.Count() == 0)
             {
                 throw new Exception($"Current transaction is not open.");
             }
-            return binding.DbContextMaster.SaveChanges();
+
+            var affectedRows = 0;
+            foreach (var binding in bindings)
+            {
+                if (binding.DbContextMaster.Database.CurrentTransaction != null)
+                    affectedRows += binding.DbContextMaster.SaveChanges();
+            }
+
+            return affectedRows;
         }
     }
 }
