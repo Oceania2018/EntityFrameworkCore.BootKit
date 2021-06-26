@@ -13,7 +13,7 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ConnectionString,
+            optionsBuilder.UseMySql(ServerVersion.AutoDetect(ConnectionString),
                 x => x.UseNetTopologySuite().EnableRetryOnFailure());
             base.OnConfiguring(optionsBuilder);
         }
@@ -27,7 +27,7 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ConnectionString,
+            optionsBuilder.UseMySql(ServerVersion.AutoDetect(ConnectionString),
                 x => x.UseNetTopologySuite().EnableRetryOnFailure());
             base.OnConfiguring(optionsBuilder);
         }
@@ -41,7 +41,7 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ConnectionString,
+            optionsBuilder.UseMySql(ServerVersion.AutoDetect(ConnectionString),
                 x => x.UseNetTopologySuite().EnableRetryOnFailure());
             base.OnConfiguring(optionsBuilder);
         }
@@ -55,7 +55,7 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ConnectionString,
+            optionsBuilder.UseMySql(ServerVersion.AutoDetect(ConnectionString),
                 x => x.UseNetTopologySuite().EnableRetryOnFailure());
             base.OnConfiguring(optionsBuilder);
         }
@@ -69,7 +69,7 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ConnectionString,
+            optionsBuilder.UseMySql(ServerVersion.AutoDetect(ConnectionString),
                 x => x.UseNetTopologySuite().EnableRetryOnFailure());
             base.OnConfiguring(optionsBuilder);
         }

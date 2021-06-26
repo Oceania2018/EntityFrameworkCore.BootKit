@@ -181,13 +181,13 @@ namespace EntityFrameworkCore.BootKit
         public int ExecuteSqlCommand<T>(string sql, params object[] parameterms)
         {
             var db = GetMaster(typeof(T)).Database;
-            return db.ExecuteSqlCommand(sql, parameterms);
+            return db.ExecuteSqlRaw(sql, parameterms);
         }
 
         public int ExecuteSqlCommand<T>(string sql, IEnumerable<object> parameterms)
         {
             var db = GetMaster(typeof(T)).Database;
-            return db.ExecuteSqlCommand(sql, parameterms);
+            return db.ExecuteSqlRaw(sql, parameterms);
         }
 
         public int SaveChanges()

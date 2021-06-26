@@ -27,11 +27,6 @@ namespace EntityFrameworkCore.BootKit
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // http://www.learnentityframeworkcore.com/
-            // don't need this code.
-            //modelBuilder.Entity<Bundle>().ForSqlServerToTable("Bundles");
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
             EntityTypes.ForEach(type =>
             {
                 var type1 = modelBuilder.Model.FindEntityType(type);

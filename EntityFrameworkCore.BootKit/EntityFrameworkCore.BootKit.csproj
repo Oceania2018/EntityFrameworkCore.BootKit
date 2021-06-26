@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>EntityFrameworkCore Boot Kit (EFBK) is a quick start database connecter for using EntityFrameworkCore.
 Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, MongoDb, Amazon Redshift, AWS Aurora and Memory database.</Description>
@@ -17,17 +17,11 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>2.8.1</Version>
-    <PackageReleaseNotes>1. Upgrade database drivers.
-2. Add Service Provider.
-3. Support SQL Log in ILoggerFactory.
-4. Expose transaction operations.
-5. Support Geography data type.
-6. Add HasNoKey data annotation.
-7. EnableRetryOnFailure.
-8. Fixed transaction failure on multiple master db.</PackageReleaseNotes>
-    <AssemblyVersion>2.8.1.0</AssemblyVersion>
-    <FileVersion>2.8.1.0</FileVersion>
+    <Version>3.0.0</Version>
+    <PackageReleaseNotes>1. Change to .netstandard 2.1.
+2. Change to EF 5.0.</PackageReleaseNotes>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <FileVersion>3.0.0.0</FileVersion>
     <Copyright>Apache 2.0</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/44989469?s=200&amp;v=4</PackageIconUrl>
@@ -44,21 +38,20 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
   <ItemGroup>
     <PackageReference Include="CSRedisCore" Version="3.6.6" />
     <PackageReference Include="EntityFrameworkCore.Triggers" Version="1.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="3.2.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="3.1.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.2.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="5.0.7" />
     <PackageReference Include="MongoDB.Driver" Version="2.12.4" />
     <PackageReference Include="Npgsql" Version="5.0.7" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.11" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="3.1.11" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.5" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.NetTopologySuite" Version="3.2.5" />
-    <PackageReference Include="Remotion.Linq" Version="2.2.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="5.0.7" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.NetTopologySuite" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
