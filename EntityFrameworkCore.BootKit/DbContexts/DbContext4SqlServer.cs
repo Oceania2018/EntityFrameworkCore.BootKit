@@ -9,14 +9,14 @@ namespace EntityFrameworkCore.BootKit
 {
     public class DbContext4SqlServer : DataContext
     {
-        public DbContext4SqlServer(DbContextOptions options, IServiceProvider serviceProvider) 
+        public DbContext4SqlServer(DbContextOptions options, IServiceProvider serviceProvider)
             : base(options, serviceProvider) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -29,8 +29,8 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseSqlServer(ConnectionString, 
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+            optionsBuilder.UseSqlServer(ConnectionString,
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -44,7 +44,7 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -58,7 +58,7 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -72,7 +72,7 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x => x.UseNetTopologySuite());
             base.OnConfiguring(optionsBuilder);
         }
     }
