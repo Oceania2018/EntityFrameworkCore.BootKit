@@ -73,6 +73,24 @@ namespace EntityFrameworkCore.BootKit.UnitTest
             var collection = db.Collection<MongoDbCollection>().FirstOrDefault();
         }
 
+        [TestMethod]
+        public void TestRawQuery()
+        {
+            var db = GetDb(DatabaseType.SqlServer);
+            AddRecord(db);
+            var pizza = db.Query<IDbRecord, PizzaOrder>("SELECT Id, OrderNumber FROM PizzaOrder WHERE Id=@Id", new
+            {
+                Id = PIZZA_ORDER_ID
+            }).First();
+            Assert.AreEqual(pizza.Id, PIZZA_ORDER_ID);
+
+            var dynamic_pizza = db.Query<IDbRecord>("SELECT Id, OrderNumber FROM PizzaOrder WHERE Id=@Id", new
+            {
+                Id = PIZZA_ORDER_ID
+            }).First();
+            Assert.AreEqual(dynamic_pizza.Id, PIZZA_ORDER_ID);
+        }
+
         private Database GetDb(DatabaseType databaseType)
         {
             var db = new Database();

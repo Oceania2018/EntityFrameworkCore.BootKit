@@ -17,11 +17,12 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <PackageReleaseNotes>1. Change to .netstandard 2.1.
-2. Change to EF 5.0.</PackageReleaseNotes>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.0.0</FileVersion>
+2. Change to EF 5.0.
+3. Query raw sql in Dapper.</PackageReleaseNotes>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+    <FileVersion>3.1.0.0</FileVersion>
     <Copyright>Apache 2.0</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/44989469?s=200&amp;v=4</PackageIconUrl>
@@ -37,6 +38,7 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 
   <ItemGroup>
     <PackageReference Include="CSRedisCore" Version="3.6.6" />
+    <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="EntityFrameworkCore.Triggers" Version="1.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.2.10" />

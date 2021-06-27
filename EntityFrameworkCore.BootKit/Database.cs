@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
@@ -62,7 +64,10 @@ namespace EntityFrameworkCore.BootKit
 
             bind.Entities = GetAllEntityTypes(bind).ToList();
 
-            if (bind.SlaveConnections == null || bind.SlaveConnections.Count == 0)
+            if (bind.SlaveConnections == null)
+                bind.SlaveConnections = new List<DbConnection>();
+
+            if (bind.SlaveConnections.Count == 0)
                 bind.SlaveConnections.Add(bind.MasterConnection);
 
             // random
@@ -184,10 +189,18 @@ namespace EntityFrameworkCore.BootKit
             return db.ExecuteSqlRaw(sql, parameterms);
         }
 
-        public int ExecuteSqlCommand<T>(string sql, IEnumerable<object> parameterms)
+        public IEnumerable<TResult> Query<TTableInterface, TResult>(string sql, object parameterms)
         {
-            var db = GetMaster(typeof(T)).Database;
-            return db.ExecuteSqlRaw(sql, parameterms);
+            var db = GetMaster(typeof(TTableInterface)).Database;
+            var conn = db.GetDbConnection();
+            return conn.Query<TResult>(sql, parameterms);
+        }
+
+        public IEnumerable<dynamic> Query<TTableInterface>(string sql, object parameterms)
+        {
+            var db = GetMaster(typeof(TTableInterface)).Database;
+            var conn = db.GetDbConnection();
+            return conn.Query(sql, parameterms);
         }
 
         public int SaveChanges()

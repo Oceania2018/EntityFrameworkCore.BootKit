@@ -44,6 +44,9 @@ namespace EntityFrameworkCore.BootKit
 
         protected void SetLog(DbContextOptionsBuilder optionsBuilder)
         {
+            if (ServiceProvider == null)
+                return;
+
             var dbSettings = (DatabaseSettings)ServiceProvider.GetService(typeof(DatabaseSettings));
             if (dbSettings.EnableSqlLog)
                 optionsBuilder.UseLoggerFactory((ILoggerFactory)ServiceProvider.GetService(typeof(ILoggerFactory)));
