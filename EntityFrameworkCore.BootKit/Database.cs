@@ -189,17 +189,17 @@ namespace EntityFrameworkCore.BootKit
             return db.ExecuteSqlRaw(sql, parameterms);
         }
 
-        public IEnumerable<TResult> Query<TTableInterface, TResult>(string sql, object parameterms)
+        public IEnumerable<TResult> Query<TTableInterface, TResult>(string sql, object parameterms = null)
         {
-            var db = GetMaster(typeof(TTableInterface)).Database;
-            var conn = db.GetDbConnection();
+            using var conn = GetBinding(typeof(TTableInterface)).SlaveConnection;
+            conn.Open();
             return conn.Query<TResult>(sql, parameterms);
         }
 
-        public IEnumerable<dynamic> Query<TTableInterface>(string sql, object parameterms)
+        public IEnumerable<dynamic> Query<TTableInterface>(string sql, object parameterms = null)
         {
-            var db = GetMaster(typeof(TTableInterface)).Database;
-            var conn = db.GetDbConnection();
+            using var conn = GetBinding(typeof(TTableInterface)).SlaveConnection;
+            conn.Open();
             return conn.Query(sql, parameterms);
         }
 
