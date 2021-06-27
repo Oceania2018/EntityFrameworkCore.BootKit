@@ -191,16 +191,30 @@ namespace EntityFrameworkCore.BootKit
 
         public IEnumerable<TResult> Query<TTableInterface, TResult>(string sql, object parameterms = null)
         {
-            using var conn = GetBinding(typeof(TTableInterface)).SlaveConnection;
-            conn.Open();
-            return conn.Query<TResult>(sql, parameterms);
+            var conn = GetBinding(typeof(TTableInterface)).SlaveConnection;
+            try
+            {
+                conn.Open();
+                return conn.Query<TResult>(sql, parameterms);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         public IEnumerable<dynamic> Query<TTableInterface>(string sql, object parameterms = null)
         {
-            using var conn = GetBinding(typeof(TTableInterface)).SlaveConnection;
-            conn.Open();
-            return conn.Query(sql, parameterms);
+            var conn = GetBinding(typeof(TTableInterface)).SlaveConnection;
+            try
+            {
+                conn.Open();
+                return conn.Query(sql, parameterms);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         public int SaveChanges()
