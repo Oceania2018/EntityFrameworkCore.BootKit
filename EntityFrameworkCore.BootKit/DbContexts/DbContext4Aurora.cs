@@ -13,7 +13,7 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ServerVersion.AutoDetect(ConnectionString));
+            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -26,7 +26,7 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ServerVersion.AutoDetect(ConnectionString));
+            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -39,7 +39,7 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ServerVersion.AutoDetect(ConnectionString));
+            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
             base.OnConfiguring(optionsBuilder);
         }
     }
