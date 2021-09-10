@@ -8,6 +8,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EntityFrameworkCore.BootKit
 {
@@ -234,5 +235,26 @@ namespace EntityFrameworkCore.BootKit
 
             return affectedRows;
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            var bindings = DbContextBinds.Where(x => x.DbContextType != null).Where(x => x.DbContextMaster != null);
+            if (bindings.Count() == 0)
+            {
+                throw new Exception($"Current transaction is not open.");
+            }
+            var affectedRows = 0;
+            var tasks = new List<Task<int>>();
+            foreach (var binding in bindings)
+            {
+                if (binding.DbContextMaster.Database.CurrentTransaction != null)
+                    tasks.Add(binding.DbContextMaster.SaveChangesAsync());
+            }
+            await Task.WhenAll();
+            foreach (var task in tasks)
+                affectedRows += task.Result;
+            return affectedRows;
+        }
+
     }
 }
