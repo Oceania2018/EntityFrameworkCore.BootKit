@@ -6,7 +6,6 @@ namespace EntityFrameworkCore.BootKit
 {
     public class DatabaseSettings
     {
-        public string Assemblies { get; set; }
         public string Default { get; set; }
         public DbConnectionSetting DefaultConnection { get; set; }
         public bool EnableSqlLog { get; set; }
