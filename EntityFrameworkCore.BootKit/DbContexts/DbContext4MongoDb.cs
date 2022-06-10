@@ -48,9 +48,13 @@ namespace EntityFrameworkCore.BootKit
 
             IMongoDatabase database = client.GetDatabase(databaseName);
 
+            // Prevent ConventionRegistry to keep growing
+            var conventionKey = "EntityFrameworkCore.BootKit";
+            ConventionRegistry.Remove(conventionKey);
+
             var pack = new ConventionPack();
             pack.Add(new IgnoreExtraElementsConvention(true));
-            ConventionRegistry.Register("EntityFrameworkCore.BootKit", pack, t => true);
+            ConventionRegistry.Register(conventionKey, pack, t => true);
 
             return database;
         }
