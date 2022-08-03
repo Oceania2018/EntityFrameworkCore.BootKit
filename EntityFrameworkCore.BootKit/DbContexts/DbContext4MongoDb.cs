@@ -11,6 +11,8 @@ namespace EntityFrameworkCore.BootKit
 {
     public class DbContext4MongoDb : DataContext
     {
+        private static bool _isRegisteredIgnoreExtraElementsConvention = false;
+
         public DbContext4MongoDb(DbContextOptions options, IServiceProvider serviceProvider)
             : base(options, serviceProvider) { }
 
@@ -49,12 +51,13 @@ namespace EntityFrameworkCore.BootKit
             IMongoDatabase database = client.GetDatabase(databaseName);
 
             // Prevent ConventionRegistry to keep growing
-            var conventionKey = "EntityFrameworkCore.BootKit";
-            ConventionRegistry.Remove(conventionKey);
-
-            var pack = new ConventionPack();
-            pack.Add(new IgnoreExtraElementsConvention(true));
-            ConventionRegistry.Register(conventionKey, pack, t => true);
+            if (!_isRegisteredIgnoreExtraElementsConvention)
+            {
+                var pack = new ConventionPack();
+                pack.Add(new IgnoreExtraElementsConvention(true));
+                ConventionRegistry.Register("EntityFrameworkCore.BootKit", pack, t => true);
+                _isRegisteredIgnoreExtraElementsConvention = true;
+            }
 
             return database;
         }
@@ -62,6 +65,8 @@ namespace EntityFrameworkCore.BootKit
 
     public class DbContext4MongoDb2 : DataContext
     {
+        private static bool _isRegisteredIgnoreExtraElementsConvention = false;
+
         public DbContext4MongoDb2(DbContextOptions options, IServiceProvider serviceProvider)
             : base(options, serviceProvider) { }
 
@@ -98,6 +103,15 @@ namespace EntityFrameworkCore.BootKit
             MongoClient client = new MongoClient(settings);
 
             IMongoDatabase database = client.GetDatabase(databaseName);
+
+            // Prevent ConventionRegistry to keep growing
+            if (!_isRegisteredIgnoreExtraElementsConvention)
+            {
+                var pack = new ConventionPack();
+                pack.Add(new IgnoreExtraElementsConvention(true));
+                ConventionRegistry.Register("EntityFrameworkCore.BootKit", pack, t => true);
+                _isRegisteredIgnoreExtraElementsConvention = true;
+            }
 
             return database;
         }
