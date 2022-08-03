@@ -17,7 +17,7 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>3.3.1</Version>
+    <Version>3.3.2</Version>
     <PackageReleaseNotes>1. Change to .netstandard 2.1.
 2. Change to EF 5.0.
 3. Query raw sql in Dapper.</PackageReleaseNotes>
