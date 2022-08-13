@@ -23,7 +23,7 @@ namespace EntityFrameworkCore.BootKit
             base.OnConfiguring(optionsBuilder);
         }
 
-        public IMongoCollection<TEntity> Set<TEntity>(string name = "")
+        public new IMongoCollection<TEntity> Set<TEntity>(string name = "")
         {
             return GetDatabase().GetCollection<TEntity>(String.IsNullOrEmpty(name) ? typeof(TEntity).Name : name);
         }
@@ -77,7 +77,7 @@ namespace EntityFrameworkCore.BootKit
             base.OnConfiguring(optionsBuilder);
         }
 
-        public IMongoCollection<TEntity> Set<TEntity>(string name = "")
+        public new IMongoCollection<TEntity> Set<TEntity>(string name = "")
         {
             return GetDatabase().GetCollection<TEntity>(String.IsNullOrEmpty(name) ? typeof(TEntity).Name : name);
         }

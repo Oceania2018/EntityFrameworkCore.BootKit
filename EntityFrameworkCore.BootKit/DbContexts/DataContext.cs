@@ -13,7 +13,10 @@ namespace EntityFrameworkCore.BootKit
         public String ConnectionString = "";
         public List<Type> EntityTypes { get; set; }
         public IServiceProvider ServiceProvider { get; set; }
-        
+        protected bool enableRetryOnFailure => dbSettings.EnableRetryOnFailure;
+
+        protected static DatabaseSettings dbSettings;
+
         public DataContext(DbContextOptions options, IServiceProvider serviceProvider)
             : base(serviceProvider, options)
         {
@@ -47,7 +50,8 @@ namespace EntityFrameworkCore.BootKit
             if (ServiceProvider == null)
                 return;
 
-            var dbSettings = (DatabaseSettings)ServiceProvider.GetService(typeof(DatabaseSettings));
+            if (dbSettings == null)
+                dbSettings = (DatabaseSettings)ServiceProvider.GetService(typeof(DatabaseSettings));
             if (dbSettings.EnableSqlLog)
                 optionsBuilder.UseLoggerFactory((ILoggerFactory)ServiceProvider.GetService(typeof(ILoggerFactory)));
             if (dbSettings.EnableSensitiveDataLogging)

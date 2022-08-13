@@ -13,7 +13,15 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
+            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -26,7 +34,15 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
+            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -39,7 +55,15 @@ namespace EntityFrameworkCore.BootKit
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString));
+            optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }

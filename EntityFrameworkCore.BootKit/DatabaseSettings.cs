@@ -10,5 +10,6 @@ namespace EntityFrameworkCore.BootKit
         public DbConnectionSetting DefaultConnection { get; set; }
         public bool EnableSqlLog { get; set; }
         public bool EnableSensitiveDataLogging { get; set; }
+        public bool EnableRetryOnFailure { get; set; }
     }
 }

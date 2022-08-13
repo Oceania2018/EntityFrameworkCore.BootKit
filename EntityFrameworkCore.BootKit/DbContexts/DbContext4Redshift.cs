@@ -13,8 +13,15 @@ namespace EntityFrameworkCore.BootKit.DbContexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             SetLog(optionsBuilder);
-            optionsBuilder.UseNpgsql(ConnectionString, 
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+            optionsBuilder.UseNpgsql(ConnectionString,
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }

@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +14,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -30,7 +35,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -44,7 +56,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -58,7 +77,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -72,7 +98,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseSqlServer(ConnectionString,
-                x => x.UseNetTopologySuite());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }

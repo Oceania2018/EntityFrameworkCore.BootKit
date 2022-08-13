@@ -14,7 +14,14 @@ namespace EntityFrameworkCore.BootKit.DbContexts
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseNpgsql(ConnectionString,
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -28,7 +35,14 @@ namespace EntityFrameworkCore.BootKit.DbContexts
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseNpgsql(ConnectionString,
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -42,7 +56,14 @@ namespace EntityFrameworkCore.BootKit.DbContexts
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseNpgsql(ConnectionString,
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }

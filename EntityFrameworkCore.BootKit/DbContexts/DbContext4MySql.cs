@@ -14,7 +14,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -28,7 +35,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -42,7 +56,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -56,7 +77,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
@@ -70,7 +98,14 @@ namespace EntityFrameworkCore.BootKit
         {
             SetLog(optionsBuilder);
             optionsBuilder.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString),
-                x => x.UseNetTopologySuite().EnableRetryOnFailure());
+                x =>
+                {
+                    x.UseNetTopologySuite();
+                    if (enableRetryOnFailure)
+                    {
+                        x.EnableRetryOnFailure();
+                    }
+                });
             base.OnConfiguring(optionsBuilder);
         }
     }
