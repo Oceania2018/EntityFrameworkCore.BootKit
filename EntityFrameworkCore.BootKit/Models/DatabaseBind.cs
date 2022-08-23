@@ -11,6 +11,7 @@ namespace EntityFrameworkCore.BootKit
         public DataContext DbContextMaster { get; set; }
 
         public int SlaveId { get; set; }
+        public bool IsRelational { get; set; } = true;
         public List<DbConnection> SlaveConnections { get; set; }
         public DbConnection SlaveConnection => SlaveConnections[SlaveId];
         public DataContext DbContextSlaver { get; set; }

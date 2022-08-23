@@ -220,7 +220,10 @@ namespace EntityFrameworkCore.BootKit
 
         public int SaveChanges()
         {
-            var bindings = DbContextBinds.Where(x => x.DbContextType != null).Where(x => x.DbContextMaster != null);
+            var bindings = DbContextBinds.Where(x => x.DbContextType != null)
+                .Where(x => x.IsRelational && x.DbContextMaster != null)
+                .ToList();
+
             if (bindings.Count() == 0)
             {
                 throw new Exception($"Current transaction is not open.");
