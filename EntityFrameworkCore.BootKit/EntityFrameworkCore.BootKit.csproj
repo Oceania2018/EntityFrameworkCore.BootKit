@@ -17,7 +17,7 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>6.0.0</Version>
+    <Version>6.1.0</Version>
     <PackageReleaseNotes>1. Change to .netstandard 2.1.
 2. Upgrade to EF 6.0.
 3. Query raw sql in Dapper.</PackageReleaseNotes>
@@ -40,7 +40,6 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 		<PackageReference Include="CSRedisCore" Version="3.6.9" />
 		<PackageReference Include="MongoDB.Driver" Version="2.13.3" />
 		<PackageReference Include="Dapper" Version="2.0.123" />
-		<PackageReference Include="EntityFrameworkCore.Triggers" Version="1.2.3" />
     </ItemGroup>
 	
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">

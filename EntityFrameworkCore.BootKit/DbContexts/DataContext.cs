@@ -1,5 +1,4 @@
-﻿using EntityFrameworkCore.Triggers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Linq;
 
 namespace EntityFrameworkCore.BootKit
 {
-    public class DataContext : DbContextWithTriggers
+    public class DataContext : DbContext
     {
         public String ConnectionString = "";
         public List<Type> EntityTypes { get; set; }
@@ -18,7 +17,7 @@ namespace EntityFrameworkCore.BootKit
         protected static DatabaseSettings dbSettings;
 
         public DataContext(DbContextOptions options, IServiceProvider serviceProvider)
-            : base(serviceProvider, options)
+            : base(options)
         {
             ServiceProvider = serviceProvider;
         }
