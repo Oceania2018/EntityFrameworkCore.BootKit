@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EntityFrameworkCore.BootKit
 {
@@ -114,6 +115,71 @@ namespace EntityFrameworkCore.BootKit
                         throw ex;
                 }
 
+                return result;
+            }
+        }
+
+        public static async Task<int> TransactionAsync<TTableInterface>(this Database db, Func<Task> func)
+        {
+            var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
+            int affected = 0;
+            if (masterDb.CurrentTransaction == null)
+            {
+                using (var transaction = await masterDb.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        await func();
+                        affected = await db.SaveChangesAsync();
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        await transaction.RollbackAsync();
+                        if (ex.Message.Contains("See the inner exception for details"))
+                            throw ex.InnerException;
+                        else throw ex;
+                    }
+                }
+            }
+            else
+            {
+                try
+                {
+                    await func();
+                    affected = await db.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    if (masterDb.CurrentTransaction != null)
+                        await masterDb.CurrentTransaction.RollbackAsync();
+                    else if (ex.Message.Contains("See the inner exception for details"))
+                        throw ex.InnerException;
+                    else throw ex;
+                }
+            }
+            return affected;
+        }
+
+        public static async Task<TResult> TransactionAsync<T, TResult>(this Database db, Func<Task<TResult>> func)
+        {
+            using (IDbContextTransaction transaction = await db.GetMaster(typeof(T)).Database.BeginTransactionAsync())
+            {
+                TResult result = default;
+                try
+                {
+                    result = await func();
+                    await db.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    if (ex.Message.Contains("See the inner exception for details"))
+                        throw ex.InnerException;
+                    else
+                        throw ex;
+                }
                 return result;
             }
         }
