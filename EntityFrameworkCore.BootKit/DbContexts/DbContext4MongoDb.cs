@@ -2,16 +2,14 @@
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace EntityFrameworkCore.BootKit
 {
     public class DbContext4MongoDb : DataContext
     {
-        private static bool _isRegisteredIgnoreExtraElementsConvention = false;
+        private static bool _isRegisteredConvention = false;
 
         public DbContext4MongoDb(DbContextOptions options, IServiceProvider serviceProvider)
             : base(options, serviceProvider) { }
@@ -51,12 +49,20 @@ namespace EntityFrameworkCore.BootKit
             IMongoDatabase database = client.GetDatabase(databaseName);
 
             // Prevent ConventionRegistry to keep growing
-            if (!_isRegisteredIgnoreExtraElementsConvention)
+            if (!_isRegisteredConvention)
             {
-                var pack = new ConventionPack();
-                pack.Add(new IgnoreExtraElementsConvention(true));
-                ConventionRegistry.Register("EntityFrameworkCore.BootKit", pack, t => true);
-                _isRegisteredIgnoreExtraElementsConvention = true;
+                var packs = new ConventionPack 
+                { 
+                    new IgnoreExtraElementsConvention(true)
+                };
+
+                if (useCamelCase)
+                {
+                    packs.Add(new CamelCaseElementNameConvention());
+                }
+
+                ConventionRegistry.Register("EntityFrameworkCore.BootKit", packs, t => true);
+                _isRegisteredConvention = true;
             }
 
             return database;

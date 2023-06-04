@@ -17,13 +17,13 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>6.2.0</Version>
+    <Version>6.2.1</Version>
     <PackageReleaseNotes>1. Change to .netstandard 2.1.
 2. Upgrade to EF 6.0.
 3. Query raw sql in Dapper.
 4. Add TransactionAsync.</PackageReleaseNotes>
-    <AssemblyVersion>6.2.0.0</AssemblyVersion>
-    <FileVersion>6.2.0.0</FileVersion>
+    <AssemblyVersion>6.2.1.0</AssemblyVersion>
+    <FileVersion>6.2.1.0</FileVersion>
     <Copyright>Apache 2.0</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/44989469?s=200&amp;v=4</PackageIconUrl>
@@ -39,13 +39,13 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 
     <ItemGroup>
 		<PackageReference Include="CSRedisCore" Version="3.8.670" />
-		<PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.19.2" />
 		<PackageReference Include="Dapper" Version="2.0.123" />
     </ItemGroup>
 	
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.2.24" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.3.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.17" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.17" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.17" />
@@ -60,14 +60,14 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     </ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.15" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.2.24" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.15" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.15" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.15" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="6.0.15" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.15" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="6.0.15" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.3.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.16" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.16" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.16" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="6.0.16" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="6.0.16" />
 		<PackageReference Include="Npgsql" Version="6.0.8" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="6.0.8" />

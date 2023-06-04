@@ -11,5 +11,6 @@ namespace EntityFrameworkCore.BootKit
         public bool EnableSqlLog { get; set; }
         public bool EnableSensitiveDataLogging { get; set; }
         public bool EnableRetryOnFailure { get; set; }
+        public bool UseCamelCase { get; set; }
     }
 }

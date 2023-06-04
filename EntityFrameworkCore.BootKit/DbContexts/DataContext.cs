@@ -9,12 +9,29 @@ namespace EntityFrameworkCore.BootKit
 {
     public class DataContext : DbContext
     {
-        public String ConnectionString = "";
+        public string ConnectionString = "";
         public List<Type> EntityTypes { get; set; }
         public IServiceProvider ServiceProvider { get; set; }
         protected bool enableRetryOnFailure => dbSettings.EnableRetryOnFailure;
+        protected bool useCamelCase => dbSettings.UseCamelCase;
 
-        protected static DatabaseSettings dbSettings;
+
+        private static DatabaseSettings _dbSettings;
+        protected DatabaseSettings dbSettings
+        {
+            get
+            {
+                if (_dbSettings == null)
+                {
+                    if (ServiceProvider == null)
+                    {
+                        throw new Exception($"ServiceProvider is not initialized.");
+                    }
+                    _dbSettings = (DatabaseSettings)ServiceProvider.GetService(typeof(DatabaseSettings));
+                }
+                return _dbSettings;
+            }
+        }
 
         public DataContext(DbContextOptions options, IServiceProvider serviceProvider)
             : base(options)
@@ -49,8 +66,6 @@ namespace EntityFrameworkCore.BootKit
             if (ServiceProvider == null)
                 return;
 
-            if (dbSettings == null)
-                dbSettings = (DatabaseSettings)ServiceProvider.GetService(typeof(DatabaseSettings));
             if (dbSettings.EnableSqlLog)
                 optionsBuilder.UseLoggerFactory((ILoggerFactory)ServiceProvider.GetService(typeof(ILoggerFactory)));
             if (dbSettings.EnableSensitiveDataLogging)

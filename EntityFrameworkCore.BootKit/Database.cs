@@ -179,8 +179,12 @@ namespace EntityFrameworkCore.BootKit
         {
             Type entityType = typeof(T);
 
-            DatabaseBind binding = DbContextBinds.First(x => x.GetType().Equals(typeof(DatabaseBind))) as DatabaseBind;
+            DatabaseBind binding = DbContextBinds.First(x => x.GetType().Equals(typeof(DatabaseBind)));
             var db = GetMaster(entityType);
+            if (string.IsNullOrEmpty(name))
+            {
+                name = nameof(T).ToLower();
+            }
             return (db as DbContext4MongoDb).Set<T>(name);
         }
 
