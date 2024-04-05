@@ -17,13 +17,13 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
     <Company>Personal</Company>
-    <Version>6.3.0</Version>
+    <Version>6.3.1</Version>
     <PackageReleaseNotes>1. Change to .netstandard 2.1.
 2. Upgrade to EF 6.0.
 3. Query raw sql in Dapper.
 4. Add TransactionAsync.</PackageReleaseNotes>
-    <AssemblyVersion>6.2.1.0</AssemblyVersion>
-    <FileVersion>6.2.1.0</FileVersion>
+    <AssemblyVersion>6.3.1.0</AssemblyVersion>
+    <FileVersion>6.3.1.0</FileVersion>
     <Copyright>Apache 2.0</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/44989469?s=200&amp;v=4</PackageIconUrl>
