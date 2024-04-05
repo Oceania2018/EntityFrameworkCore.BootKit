@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -183,7 +184,20 @@ namespace EntityFrameworkCore.BootKit
             var db = GetMaster(entityType);
             if (string.IsNullOrEmpty(name))
             {
-                name = nameof(T).ToLower();
+                // Default collection name
+                name = typeof(T).Name;
+
+                // Check if the class has TableAttribute
+                var attributes = typeof(T).GetCustomAttributesData()
+                    .FirstOrDefault(x => x.AttributeType == typeof(TableAttribute));
+                if (attributes != null)
+                {
+                    var arguments = attributes.ConstructorArguments;
+                    if (arguments.Count > 0)
+                    {
+                        name = attributes.ConstructorArguments[0].Value.ToString();
+                    }
+                }
             }
             return (db as DbContext4MongoDb).Set<T>(name);
         }
