@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace EntityFrameworkCore.BootKit.UnitTest.Tables
@@ -12,6 +8,8 @@ namespace EntityFrameworkCore.BootKit.UnitTest.Tables
     {
         [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
         public string Id { get; set; }
+
+        public string Name { get; set; }
     }
 
     public interface INoSqlDbRecord

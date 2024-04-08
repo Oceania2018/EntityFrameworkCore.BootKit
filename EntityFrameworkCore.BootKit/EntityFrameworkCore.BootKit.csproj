@@ -5,6 +5,7 @@
     <SccProvider>SAK</SccProvider>
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
+	<LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
