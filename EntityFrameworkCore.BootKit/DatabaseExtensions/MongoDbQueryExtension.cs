@@ -1,39 +1,40 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
-namespace EntityFrameworkCore.BootKit
+namespace EntityFrameworkCore.BootKit;
+
+public static class MongoDbQueryExtension
 {
-    public static class MongoDbQueryExtension
+    public static IMongoQueryable<TSource> Queryable<TSource>(this IMongoCollection<TSource> source)
     {
-        public static IMongoQueryable<TSource> Queryable<TSource>(this IMongoCollection<TSource> source)
-        {
-            return source.AsQueryable();
-        }
+        return source.AsQueryable();
+    }
 
-        public static TSource FirstOrDefault<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter = null)
-        {
-            return filter == null ? source.AsQueryable().FirstOrDefault() : source.AsQueryable().FirstOrDefault(filter);
-        }
+    public static TSource FirstOrDefault<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter = null)
+    {
+        return filter == null ? source.AsQueryable().FirstOrDefault() : source.AsQueryable().FirstOrDefault(filter);
+    }
 
-        public static IMongoQueryable<TSource> Where<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter)
-        {
-            return source.AsQueryable().Where(filter);
-        }
+    public static TSource LastOrDefault<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter = null)
+    {
+        return filter == null ? source.AsQueryable().LastOrDefault() : source.AsQueryable().LastOrDefault(filter);
+    }
 
-        public static UpdateResult UpdateOne<TDocument, TField>(this IMongoCollection<TDocument> source, Expression<Func<TDocument, bool>> filter, Expression<Func<TDocument, TField>> field, TField value)
-        {
-            return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value));
-        }
+    public static IMongoQueryable<TSource> Where<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter)
+    {
+        return source.AsQueryable().Where(filter);
+    }
 
-        public static DeleteResult DeleteOne<TDocument, TField>(this IMongoCollection<TDocument> source, Expression<Func<TDocument, bool>> filter, Expression<Func<TDocument, TField>> field, TField value)
-        {
-            return source.DeleteMany(filter);
-        }
+    public static UpdateResult UpdateOne<TDocument, TField>(this IMongoCollection<TDocument> source, Expression<Func<TDocument, bool>> filter, Expression<Func<TDocument, TField>> field, TField value)
+    {
+        return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value));
+    }
+
+    public static DeleteResult DeleteOne<TDocument, TField>(this IMongoCollection<TDocument> source, Expression<Func<TDocument, bool>> filter, Expression<Func<TDocument, TField>> field, TField value)
+    {
+        return source.DeleteMany(filter);
     }
 }

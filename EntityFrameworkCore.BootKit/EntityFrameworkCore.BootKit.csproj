@@ -1,29 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Label="Globals">
-    <SccProjectName>SAK</SccProjectName>
-    <SccProvider>SAK</SccProvider>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccLocalPath>SAK</SccLocalPath>
+	  <LangVersion>$(LangVersion)</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
     <Description>EntityFrameworkCore Boot Kit (EFBK) is a quick start database connecter for using EntityFrameworkCore.
 Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, MongoDb, Amazon Redshift, AWS Aurora and Memory database.</Description>
     <PackageProjectUrl>https://github.com/Oceania2018/EntityFrameworkCore.BootKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Oceania2018/EntityFrameworkCore.BootKit</RepositoryUrl>
     <PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql</PackageTags>
     <Authors>Haiping Chen</Authors>
-    <Company>Personal</Company>
-    <Version>6.3.1</Version>
-    <PackageReleaseNotes>1. Change to .netstandard 2.1.
-2. Upgrade to EF 6.0.
-3. Query raw sql in Dapper.
-4. Add TransactionAsync.</PackageReleaseNotes>
-    <AssemblyVersion>6.3.1.0</AssemblyVersion>
-    <FileVersion>6.3.1.0</FileVersion>
+    <Company>SciSharp STACK</Company>
+    <Version>$(BootKitVersion)</Version>
+    <PackageReleaseNotes>
+		1. Change to .netstandard 2.1.
+		2. Upgrade to EF 6.0.
+		3. Query raw sql in Dapper.
+		4. Add TransactionAsync.
+		5. Add LastOrDefault for MongoDB.
+	</PackageReleaseNotes>
+    <AssemblyVersion>$(BootKitVersion)</AssemblyVersion>
+    <FileVersion>$(BootKitVersion)</FileVersion>
     <Copyright>Apache 2.0</Copyright>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/44989469?s=200&amp;v=4</PackageIconUrl>
@@ -39,19 +39,19 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 
     <ItemGroup>
 		<PackageReference Include="CSRedisCore" Version="3.8.802" />
-		<PackageReference Include="MongoDB.Driver" Version="2.24.0" />
-		<PackageReference Include="Dapper" Version="2.1.28" />
+		<PackageReference Include="MongoDB.Driver" Version="2.25.0" />
+		<PackageReference Include="Dapper" Version="2.1.44" />
     </ItemGroup>
 	
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.3.2" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.17" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.17" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.17" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="5.0.17" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="5.0.17" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(EntityFramework5)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework5)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework5)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework5)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework5)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework5)" />
         <PackageReference Include="Npgsql" Version="5.0.15" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="5.0.10" />
@@ -60,18 +60,18 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     </ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.27" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.3.10" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.27" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.27" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.27" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="6.0.27" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.27" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="6.0.27" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(EntityFramework6)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework6)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework6)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework6)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework6)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework6)" />
 		<PackageReference Include="Npgsql" Version="6.0.10" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.22" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="6.0.22" />
-		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
-		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql.NetTopologySuite" Version="6.0.2" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.3" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql.NetTopologySuite" Version="6.0.3" />
 	</ItemGroup>
 </Project>
