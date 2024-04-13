@@ -2,6 +2,7 @@
 using MongoDB.Driver.Linq;
 using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
 namespace EntityFrameworkCore.BootKit;
@@ -16,6 +17,11 @@ public static class MongoDbQueryExtension
     public static TSource FirstOrDefault<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter = null)
     {
         return filter == null ? source.AsQueryable().FirstOrDefault() : source.AsQueryable().FirstOrDefault(filter);
+    }
+
+    public static TSource LastOrDefault<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter = null)
+    {
+        return filter == null ? source.AsQueryable().LastOrDefault() : source.AsQueryable().LastOrDefault(filter);
     }
 
     public static IMongoQueryable<TSource> Where<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter)
