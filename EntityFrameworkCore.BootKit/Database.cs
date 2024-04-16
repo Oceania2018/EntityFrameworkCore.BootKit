@@ -24,9 +24,10 @@ namespace EntityFrameworkCore.BootKit
 
         internal DatabaseBind GetBinding(Type tableInterface)
         {
-            var binding = DbContextBinds.FirstOrDefault(x => (x.TableInterface != null && x.TableInterface.Equals(tableInterface)) || (x.Entities != null && x.Entities.Contains(tableInterface)));
+            var binding = DbContextBinds.FirstOrDefault(x => (x.TableInterface != null && x.TableInterface.Equals(tableInterface)) ||
+                (x.Entities != null && x.Entities.Select(e => e.Name).Contains(tableInterface.Name)));
 
-            if(binding == null)
+            if (binding == null)
             {
                 throw new Exception($"Can't find binding for interface {tableInterface.ToString()}");
             }
