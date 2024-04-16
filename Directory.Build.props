@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
         <LangVersion>10.0</LangVersion>
-		<BootKitVersion>6.4.0</BootKitVersion>
+		<BootKitVersion>6.4.1</BootKitVersion>
 		<EntityFramework5>5.0.17</EntityFramework5>
 		<EntityFramework6>6.0.29</EntityFramework6>
 		<EntityFramework8>8.0.4</EntityFramework8>
