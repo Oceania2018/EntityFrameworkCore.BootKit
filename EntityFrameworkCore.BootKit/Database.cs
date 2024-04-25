@@ -156,6 +156,12 @@ namespace EntityFrameworkCore.BootKit
             db.Add(entity);
         }
 
+        public void Delete<TTableInterface>(Object entity)
+        {
+            var db = GetMaster(typeof(TTableInterface));
+            db.Remove(entity);
+        }
+
         public void Add(Object entity)
         {
             var db = GetMaster(typeof(IDbRecord));
