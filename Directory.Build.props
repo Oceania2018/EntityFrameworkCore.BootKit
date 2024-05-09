@@ -2,8 +2,8 @@
     <PropertyGroup>
         <LangVersion>10.0</LangVersion>
 		<BootKitVersion>8.2.1</BootKitVersion>
-		<EntityFramework5>5.0.17</EntityFramework5>
-		<EntityFramework6>6.0.29</EntityFramework6>
+		<EntityFramework5>8.0.4</EntityFramework5>
+		<EntityFramework6>8.0.4</EntityFramework6>
 		<EntityFramework8>8.0.4</EntityFramework8>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
