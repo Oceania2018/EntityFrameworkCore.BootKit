@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -35,22 +36,55 @@ public static class MongoDbQueryExtension
         return source.Queryable().Where(filter);
     }
 
-    public static UpdateResult UpdateOne<TDocument, TField>(this IMongoCollection<TDocument> source, Expression<Func<TDocument, bool>> filter, Expression<Func<TDocument, TField>> field, TField value)
+    public static UpdateResult UpdateOne<TDocument, TField>(this IMongoCollection<TDocument> source,
+        Expression<Func<TDocument, bool>> filter,
+        params (Expression<Func<TDocument, TField>>, TField)[] fieldValuePairs)
     {
-        return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value));
+        var updateDefinitionBuilder = Builders<TDocument>.Update;
+        var definitions = new List<UpdateDefinition<TDocument>>();
+        foreach (var pair in fieldValuePairs)
+        {
+            definitions.Add(updateDefinitionBuilder.Set(pair.Item1, pair.Item2));
+        }
+
+        var updateFields = updateDefinitionBuilder.Combine(definitions);
+
+        return source.UpdateOne(filter, updateFields, options: new UpdateOptions
+        {
+            IsUpsert = true
+        });
     }
 
-    public static UpdateResult UpdateMany<TDocument, TField>(this IMongoCollection<TDocument> source, Expression<Func<TDocument, bool>> filter, Expression<Func<TDocument, TField>> field, TField value)
+    public static UpdateResult UpdateOne<TDocument, TField>(this IMongoCollection<TDocument> source, 
+        Expression<Func<TDocument, bool>> filter, 
+        Expression<Func<TDocument, TField>> field, 
+        TField value)
     {
-        return source.UpdateMany(filter, Builders<TDocument>.Update.Set(field, value));
+        return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value), options: new UpdateOptions
+        {
+            IsUpsert = true
+        });
     }
 
-    public static DeleteResult DeleteOne<TDocument, TField>(this IMongoCollection<TDocument> source, Expression<Func<TDocument, bool>> filter)
+    public static UpdateResult UpdateMany<TDocument, TField>(this IMongoCollection<TDocument> source, 
+        Expression<Func<TDocument, bool>> filter, 
+        Expression<Func<TDocument, TField>> field, 
+        TField value)
+    {
+        return source.UpdateMany(filter, Builders<TDocument>.Update.Set(field, value), options: new UpdateOptions
+        {
+            IsUpsert = true
+        });
+    }
+
+    public static DeleteResult DeleteOne<TDocument, TField>(this IMongoCollection<TDocument> source, 
+        Expression<Func<TDocument, bool>> filter)
     {
         return source.DeleteOne(filter);
     }
 
-    public static DeleteResult DeleteMany<TDocument, TField>(this IMongoCollection<TDocument> source, Expression<Func<TDocument, bool>> filter)
+    public static DeleteResult DeleteMany<TDocument, TField>(this IMongoCollection<TDocument> source, 
+        Expression<Func<TDocument, bool>> filter)
     {
         return source.DeleteMany(filter);
     }

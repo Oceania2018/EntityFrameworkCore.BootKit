@@ -1,10 +1,10 @@
 <Project>
     <PropertyGroup>
         <LangVersion>10.0</LangVersion>
-		<BootKitVersion>8.2.1</BootKitVersion>
+		<BootKitVersion>8.3.0</BootKitVersion>
 		<EntityFramework5>5.0.17</EntityFramework5>
 		<EntityFramework6>6.0.29</EntityFramework6>
-		<EntityFramework8>8.0.4</EntityFramework8>
+		<EntityFramework8>8.0.6</EntityFramework8>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
     </PropertyGroup>
