@@ -150,22 +150,28 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
-        public void Add<TTableInterface>(Object entity)
+        public void Add<TTableInterface>(object entity)
         {
             var db = GetMaster(typeof(TTableInterface));
             db.Add(entity);
         }
 
-        public void Delete<TTableInterface>(Object entity)
+        public void Add<TTableInterface>(IEnumerable<object> entities)
+        {
+            var db = GetMaster(typeof(TTableInterface));
+            db.AddRange(entities);
+        }
+
+        public void Delete<TTableInterface>(object entity)
         {
             var db = GetMaster(typeof(TTableInterface));
             db.Remove(entity);
         }
 
-        public void Add(Object entity)
+        public void Delete<TTableInterface>(IEnumerable<object> entities)
         {
-            var db = GetMaster(typeof(IDbRecord));
-            db.Add(entity);
+            var db = GetMaster(typeof(TTableInterface));
+            db.RemoveRange(entities);
         }
 
         public DbSet<T> Table<T>() where T : class

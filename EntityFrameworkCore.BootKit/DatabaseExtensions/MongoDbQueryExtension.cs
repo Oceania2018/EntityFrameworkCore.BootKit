@@ -36,31 +36,44 @@ public static class MongoDbQueryExtension
         return source.Queryable().Where(filter);
     }
 
-    public static UpdateResult UpdateOne<TDocument, TField>(this IMongoCollection<TDocument> source,
-        Expression<Func<TDocument, bool>> filter,
-        params (Expression<Func<TDocument, TField>>, TField)[] fieldValuePairs)
-    {
-        var updateDefinitionBuilder = Builders<TDocument>.Update;
-        var definitions = new List<UpdateDefinition<TDocument>>();
-        foreach (var pair in fieldValuePairs)
-        {
-            definitions.Add(updateDefinitionBuilder.Set(pair.Item1, pair.Item2));
-        }
-
-        var updateFields = updateDefinitionBuilder.Combine(definitions);
-
-        return source.UpdateOne(filter, updateFields, options: new UpdateOptions
-        {
-            IsUpsert = true
-        });
-    }
-
     public static UpdateResult UpdateOne<TDocument, TField>(this IMongoCollection<TDocument> source, 
         Expression<Func<TDocument, bool>> filter, 
         Expression<Func<TDocument, TField>> field, 
         TField value)
     {
         return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value), options: new UpdateOptions
+        {
+            IsUpsert = true
+        });
+    }
+
+    public static UpdateResult UpdateOne<TDocument, TField1, TField2>(this IMongoCollection<TDocument> source,
+        Expression<Func<TDocument, bool>> filter,
+        (Expression<Func<TDocument, TField1>>, TField1) kv1,
+        (Expression<Func<TDocument, TField2>>, TField2) kv2)
+    {
+        var update = Builders<TDocument>.Update
+            .Set(kv1.Item1, kv1.Item2)
+            .Set(kv2.Item1, kv2.Item2);
+
+        return source.UpdateOne(filter, update, options: new UpdateOptions
+        {
+            IsUpsert = true
+        });
+    }
+
+    public static UpdateResult UpdateOne<TDocument, TField1, TField2, TField3>(this IMongoCollection<TDocument> source,
+        Expression<Func<TDocument, bool>> filter,
+        (Expression<Func<TDocument, TField1>>, TField1) kv1,
+        (Expression<Func<TDocument, TField2>>, TField2) kv2,
+        (Expression<Func<TDocument, TField3>>, TField3) kv3)
+    {
+        var update = Builders<TDocument>.Update
+            .Set(kv1.Item1, kv1.Item2)
+            .Set(kv2.Item1, kv2.Item2)
+            .Set(kv3.Item1, kv3.Item2);
+
+        return source.UpdateOne(filter, update, options: new UpdateOptions
         {
             IsUpsert = true
         });
