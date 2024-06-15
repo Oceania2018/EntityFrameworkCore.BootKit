@@ -41,13 +41,47 @@ public static class MongoDbQueryExtension
         Expression<Func<TDocument, TField>> field, 
         TField value)
     {
-        return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value), options: new UpdateOptions
-        {
-            IsUpsert = true
-        });
+        return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value));
     }
 
     public static UpdateResult UpdateOne<TDocument, TField1, TField2>(this IMongoCollection<TDocument> source,
+        Expression<Func<TDocument, bool>> filter,
+        (Expression<Func<TDocument, TField1>>, TField1) kv1,
+        (Expression<Func<TDocument, TField2>>, TField2) kv2)
+    {
+        var update = Builders<TDocument>.Update
+            .Set(kv1.Item1, kv1.Item2)
+            .Set(kv2.Item1, kv2.Item2);
+
+        return source.UpdateOne(filter, update);
+    }
+
+    public static UpdateResult UpdateOne<TDocument, TField1, TField2, TField3>(this IMongoCollection<TDocument> source,
+        Expression<Func<TDocument, bool>> filter,
+        (Expression<Func<TDocument, TField1>>, TField1) kv1,
+        (Expression<Func<TDocument, TField2>>, TField2) kv2,
+        (Expression<Func<TDocument, TField3>>, TField3) kv3)
+    {
+        var update = Builders<TDocument>.Update
+            .Set(kv1.Item1, kv1.Item2)
+            .Set(kv2.Item1, kv2.Item2)
+            .Set(kv3.Item1, kv3.Item2);
+
+        return source.UpdateOne(filter, update);
+    }
+
+    public static UpdateResult UpsetOne<TDocument, TField>(this IMongoCollection<TDocument> source,
+        Expression<Func<TDocument, bool>> filter,
+        Expression<Func<TDocument, TField>> field,
+        TField value)
+        {
+            return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value), options: new UpdateOptions
+            {
+                IsUpsert = true
+            });
+        }
+
+    public static UpdateResult UpsertOne<TDocument, TField1, TField2>(this IMongoCollection<TDocument> source,
         Expression<Func<TDocument, bool>> filter,
         (Expression<Func<TDocument, TField1>>, TField1) kv1,
         (Expression<Func<TDocument, TField2>>, TField2) kv2)
@@ -62,7 +96,7 @@ public static class MongoDbQueryExtension
         });
     }
 
-    public static UpdateResult UpdateOne<TDocument, TField1, TField2, TField3>(this IMongoCollection<TDocument> source,
+    public static UpdateResult UpsertOne<TDocument, TField1, TField2, TField3>(this IMongoCollection<TDocument> source,
         Expression<Func<TDocument, bool>> filter,
         (Expression<Func<TDocument, TField1>>, TField1) kv1,
         (Expression<Func<TDocument, TField2>>, TField2) kv2,
@@ -82,6 +116,14 @@ public static class MongoDbQueryExtension
     public static UpdateResult UpdateMany<TDocument, TField>(this IMongoCollection<TDocument> source, 
         Expression<Func<TDocument, bool>> filter, 
         Expression<Func<TDocument, TField>> field, 
+        TField value)
+    {
+        return source.UpdateMany(filter, Builders<TDocument>.Update.Set(field, value));
+    }
+
+    public static UpdateResult UpsertMany<TDocument, TField>(this IMongoCollection<TDocument> source,
+        Expression<Func<TDocument, bool>> filter,
+        Expression<Func<TDocument, TField>> field,
         TField value)
     {
         return source.UpdateMany(filter, Builders<TDocument>.Update.Set(field, value), options: new UpdateOptions
