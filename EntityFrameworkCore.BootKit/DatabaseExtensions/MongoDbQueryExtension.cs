@@ -44,30 +44,20 @@ public static class MongoDbQueryExtension
         return source.UpdateOne(filter, Builders<TDocument>.Update.Set(field, value));
     }
 
-    public static UpdateResult UpdateOne<TDocument, TField1, TField2>(this IMongoCollection<TDocument> source,
+    public static UpdateResult UpdateOne<TDocument>(this IMongoCollection<TDocument> source,
         Expression<Func<TDocument, bool>> filter,
-        (Expression<Func<TDocument, TField1>>, TField1) kv1,
-        (Expression<Func<TDocument, TField2>>, TField2) kv2)
+        (Expression<Func<TDocument, object>>, object)[] kvs)
     {
-        var update = Builders<TDocument>.Update
-            .Set(kv1.Item1, kv1.Item2)
-            .Set(kv2.Item1, kv2.Item2);
+        var updateDefinitionBuilder = Builders<TDocument>.Update;
+        var definitions = new List<UpdateDefinition<TDocument>>();
+        foreach (var pair in kvs)
+        {
+            definitions.Add(updateDefinitionBuilder.Set(pair.Item1, pair.Item2));
+        }
 
-        return source.UpdateOne(filter, update);
-    }
+        var updateFields = updateDefinitionBuilder.Combine(definitions);
 
-    public static UpdateResult UpdateOne<TDocument, TField1, TField2, TField3>(this IMongoCollection<TDocument> source,
-        Expression<Func<TDocument, bool>> filter,
-        (Expression<Func<TDocument, TField1>>, TField1) kv1,
-        (Expression<Func<TDocument, TField2>>, TField2) kv2,
-        (Expression<Func<TDocument, TField3>>, TField3) kv3)
-    {
-        var update = Builders<TDocument>.Update
-            .Set(kv1.Item1, kv1.Item2)
-            .Set(kv2.Item1, kv2.Item2)
-            .Set(kv3.Item1, kv3.Item2);
-
-        return source.UpdateOne(filter, update);
+        return source.UpdateOne(filter, updateFields);
     }
 
     public static UpdateResult UpsetOne<TDocument, TField>(this IMongoCollection<TDocument> source,
@@ -83,31 +73,18 @@ public static class MongoDbQueryExtension
 
     public static UpdateResult UpsertOne<TDocument, TField1, TField2>(this IMongoCollection<TDocument> source,
         Expression<Func<TDocument, bool>> filter,
-        (Expression<Func<TDocument, TField1>>, TField1) kv1,
-        (Expression<Func<TDocument, TField2>>, TField2) kv2)
+        (Expression<Func<TDocument, TField1>>, TField1)[] kvs)
     {
-        var update = Builders<TDocument>.Update
-            .Set(kv1.Item1, kv1.Item2)
-            .Set(kv2.Item1, kv2.Item2);
-
-        return source.UpdateOne(filter, update, options: new UpdateOptions
+        var updateDefinitionBuilder = Builders<TDocument>.Update;
+        var definitions = new List<UpdateDefinition<TDocument>>();
+        foreach (var pair in kvs)
         {
-            IsUpsert = true
-        });
-    }
+            definitions.Add(updateDefinitionBuilder.Set(pair.Item1, pair.Item2));
+        }
 
-    public static UpdateResult UpsertOne<TDocument, TField1, TField2, TField3>(this IMongoCollection<TDocument> source,
-        Expression<Func<TDocument, bool>> filter,
-        (Expression<Func<TDocument, TField1>>, TField1) kv1,
-        (Expression<Func<TDocument, TField2>>, TField2) kv2,
-        (Expression<Func<TDocument, TField3>>, TField3) kv3)
-    {
-        var update = Builders<TDocument>.Update
-            .Set(kv1.Item1, kv1.Item2)
-            .Set(kv2.Item1, kv2.Item2)
-            .Set(kv3.Item1, kv3.Item2);
+        var updateFields = updateDefinitionBuilder.Combine(definitions);
 
-        return source.UpdateOne(filter, update, options: new UpdateOptions
+        return source.UpdateOne(filter, updateFields, options: new UpdateOptions
         {
             IsUpsert = true
         });
