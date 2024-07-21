@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,14 +14,14 @@ namespace EntityFrameworkCore.BootKit
 {
     public class Database
     {
-        internal List<DatabaseBind> DbContextBinds;
+        public List<DatabaseBind> DbContextBinds;
 
         public Database()
         {
             DbContextBinds = new List<DatabaseBind>();
         }
 
-        internal DatabaseBind GetBinding(Type tableInterface)
+        public DatabaseBind GetBinding(Type tableInterface)
         {
             var binding = DbContextBinds.FirstOrDefault(x => (x.TableInterface != null && x.TableInterface.Equals(tableInterface)) || 
                 (x.Entities != null && x.Entities.Select(e => e.Name).Contains(tableInterface.Name)));
@@ -35,7 +34,7 @@ namespace EntityFrameworkCore.BootKit
             return binding;
         }
 
-        internal DatabaseBind GetBinding(string tableName)
+        public DatabaseBind GetBinding(string tableName)
         {
             var binding = DbContextBinds.FirstOrDefault(x => x.Entities != null && x.Entities.Select(entity => entity.Name.ToLower()).Contains(tableName.ToLower()));
 
@@ -187,32 +186,6 @@ namespace EntityFrameworkCore.BootKit
             {
                 return GetMaster(entityType).Set<T>();
             }
-        }
-
-        public IMongoCollection<T> Collection<T>(string name = "") where T : class
-        {
-            Type entityType = typeof(T);
-
-            DatabaseBind binding = DbContextBinds.First(x => x.GetType().Equals(typeof(DatabaseBind)));
-            var db = GetMaster(entityType);
-            if (string.IsNullOrEmpty(name))
-            {
-                // Default collection name
-                name = typeof(T).Name;
-
-                // Check if the class has TableAttribute
-                var attributes = typeof(T).GetCustomAttributesData()
-                    .FirstOrDefault(x => x.AttributeType == typeof(TableAttribute));
-                if (attributes != null)
-                {
-                    var arguments = attributes.ConstructorArguments;
-                    if (arguments.Count > 0)
-                    {
-                        name = attributes.ConstructorArguments[0].Value.ToString();
-                    }
-                }
-            }
-            return (db as DbContext4MongoDb).Set<T>(name);
         }
 
         public int ExecuteSqlCommand<T>(string sql, params object[] parameterms)

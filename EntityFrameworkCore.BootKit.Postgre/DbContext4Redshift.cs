@@ -1,0 +1,24 @@
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace EntityFrameworkCore.BootKit.DbContexts;
+
+public class DbContext4Redshift : DataContext
+{
+    public DbContext4Redshift(DbContextOptions options, IServiceProvider serviceProvider)
+        : base(options, serviceProvider) { }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        SetLog(optionsBuilder);
+        optionsBuilder.UseNpgsql(ConnectionString,
+            x =>
+            {
+                x.UseNetTopologySuite();
+                if (enableRetryOnFailure)
+                {
+                    x.EnableRetryOnFailure();
+                }
+            });
+        base.OnConfiguring(optionsBuilder);
+    }
+}

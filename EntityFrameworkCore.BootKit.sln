@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.BootKit", "EntityFrameworkCore.BootKit\EntityFrameworkCore.BootKit.csproj", "{817B600E-BD74-4A7A-AC99-37E0BBECD899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.BootKit", "EntityFrameworkCore.BootKit\EntityFrameworkCore.BootKit.csproj", "{817B600E-BD74-4A7A-AC99-37E0BBECD899}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.BootKit.UnitTest", "EntityFrameworkCore.BootKit.UnitTest\EntityFrameworkCore.BootKit.UnitTest.csproj", "{6031B9F8-88AD-4048-ACDC-7B4116155995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.BootKit.UnitTest", "EntityFrameworkCore.BootKit.UnitTest\EntityFrameworkCore.BootKit.UnitTest.csproj", "{6031B9F8-88AD-4048-ACDC-7B4116155995}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.BootKit.Mongo", "EntityFrameworkCore.BootKit.Mongo\EntityFrameworkCore.BootKit.Mongo.csproj", "{7DB89166-A667-4281-9957-8D0DB9E12783}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.BootKit.Postgre", "EntityFrameworkCore.BootKit.Postgre\EntityFrameworkCore.BootKit.Postgre.csproj", "{4104673F-29DE-4084-9C9F-2355EE025686}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.BootKit.MySql", "EntityFrameworkCore.BootKit.MySql\EntityFrameworkCore.BootKit.MySql.csproj", "{589CE124-0B1D-4E62-B075-364F7561E90F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{6031B9F8-88AD-4048-ACDC-7B4116155995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6031B9F8-88AD-4048-ACDC-7B4116155995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6031B9F8-88AD-4048-ACDC-7B4116155995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DB89166-A667-4281-9957-8D0DB9E12783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DB89166-A667-4281-9957-8D0DB9E12783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DB89166-A667-4281-9957-8D0DB9E12783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DB89166-A667-4281-9957-8D0DB9E12783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4104673F-29DE-4084-9C9F-2355EE025686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4104673F-29DE-4084-9C9F-2355EE025686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4104673F-29DE-4084-9C9F-2355EE025686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4104673F-29DE-4084-9C9F-2355EE025686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589CE124-0B1D-4E62-B075-364F7561E90F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589CE124-0B1D-4E62-B075-364F7561E90F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589CE124-0B1D-4E62-B075-364F7561E90F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589CE124-0B1D-4E62-B075-364F7561E90F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

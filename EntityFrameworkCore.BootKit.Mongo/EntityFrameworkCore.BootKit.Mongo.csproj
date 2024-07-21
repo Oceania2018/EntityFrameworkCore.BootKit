@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>net8.0;net6.0;netstandard2.1</TargetFrameworks>
+	<GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<Version>$(BootKitVersion)</Version>
+	<AssemblyVersion>$(BootKitVersion)</AssemblyVersion>
+	<FileVersion>$(BootKitVersion)</FileVersion>
+	<Icon>https://avatars3.githubusercontent.com/u/44989469?s=200&amp;v=4</Icon>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFrameworkCore.BootKit\EntityFrameworkCore.BootKit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="MongoDB.Driver" Version="2.27.0" />
+  </ItemGroup>
+	
+</Project>
