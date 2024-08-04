@@ -109,13 +109,13 @@ public static class MongoDbQueryExtension
         });
     }
 
-    public static DeleteResult DeleteOne<TDocument, TField>(this IMongoCollection<TDocument> source, 
+    public static DeleteResult DeleteOne<TDocument>(this IMongoCollection<TDocument> source, 
         Expression<Func<TDocument, bool>> filter)
     {
         return source.DeleteOne(filter);
     }
 
-    public static DeleteResult DeleteMany<TDocument, TField>(this IMongoCollection<TDocument> source, 
+    public static DeleteResult DeleteMany<TDocument>(this IMongoCollection<TDocument> source, 
         Expression<Func<TDocument, bool>> filter)
     {
         return source.DeleteMany(filter);

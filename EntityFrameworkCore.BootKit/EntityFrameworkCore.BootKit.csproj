@@ -38,7 +38,6 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
   </ItemGroup>
 
     <ItemGroup>
-		<PackageReference Include="CSRedisCore" Version="3.8.803" />
 		<PackageReference Include="Dapper" Version="2.1.44" />
     </ItemGroup>
 	
@@ -50,7 +49,7 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework5)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.4.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.4.4" />
     </ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
@@ -61,7 +60,7 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework6)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.4.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.4.4" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
@@ -72,6 +71,6 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework8)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="8.4.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="8.4.4" />
 	</ItemGroup>	
 </Project>
