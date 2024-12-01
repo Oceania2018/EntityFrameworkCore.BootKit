@@ -10,7 +10,7 @@ namespace EntityFrameworkCore.BootKit;
 
 public static class MongoDbQueryExtension
 {
-    public static IMongoQueryable<TSource> Queryable<TSource>(this IMongoCollection<TSource> source)
+    public static IQueryable<TSource> Queryable<TSource>(this IMongoCollection<TSource> source)
     {
         return source.AsQueryable();
     }
@@ -26,12 +26,12 @@ public static class MongoDbQueryExtension
         // return filter == null ? source.Queryable().LastOrDefault() : source.Queryable().LastOrDefault(filter);
     }
 
-    public static IOrderedMongoQueryable<TSource> OrderByDescending<TSource, TKey>(this IMongoCollection<TSource> source, Expression<Func<TSource, TKey>> keySelector)
+    public static IOrderedQueryable<TSource> OrderByDescending<TSource, TKey>(this IMongoCollection<TSource> source, Expression<Func<TSource, TKey>> keySelector)
     {
         return source.Queryable().OrderByDescending(keySelector);
     }
 
-    public static IMongoQueryable<TSource> Where<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter)
+    public static IQueryable<TSource> Where<TSource>(this IMongoCollection<TSource> source, Expression<Func<TSource, bool>> filter)
     {
         return source.Queryable().Where(filter);
     }
