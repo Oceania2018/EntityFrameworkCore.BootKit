@@ -78,8 +78,8 @@ namespace EntityFrameworkCore.BootKit
                     }
                     catch (Exception ex)
                     {
-                        ReloadChangedEntities(dbContext);
                         transaction.Rollback();
+                        ReloadChangedEntities(dbContext);
                         if (ex.Message.Contains("See the inner exception for details"))
                             throw ex.InnerException;
                         else
@@ -98,8 +98,8 @@ namespace EntityFrameworkCore.BootKit
                 {
                     if (masterDb.CurrentTransaction != null)
                     {
-                        ReloadChangedEntities(dbContext);
                         masterDb.CurrentTransaction.Rollback();
+                        ReloadChangedEntities(dbContext);
                     }
                     if (ex.Message.Contains("See the inner exception for details"))
                         throw ex.InnerException;
