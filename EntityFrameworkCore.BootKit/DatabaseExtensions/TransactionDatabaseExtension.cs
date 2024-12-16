@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
@@ -48,9 +49,21 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
+        public static void ReloadChangedEntities(DbContext context)
+        {
+            foreach (var entry in context.ChangeTracker.Entries())
+            {
+                if (entry.State != EntityState.Unchanged)
+                {
+                    entry.Reload(); // Reload from the database to discard all changes
+                }
+            }
+        }
+
         public static int Transaction<TTableInterface>(this Database db, Action action)
         {
-            var masterDb = db.GetMaster(typeof(TTableInterface)).Database;
+            var dbContext = db.GetMaster(typeof(TTableInterface));
+            var masterDb = dbContext.Database;
             int affected = 0;
 
             if (masterDb.CurrentTransaction == null)
@@ -65,6 +78,7 @@ namespace EntityFrameworkCore.BootKit
                     }
                     catch (Exception ex)
                     {
+                        ReloadChangedEntities(dbContext);
                         transaction.Rollback();
                         if (ex.Message.Contains("See the inner exception for details"))
                             throw ex.InnerException;
@@ -83,8 +97,10 @@ namespace EntityFrameworkCore.BootKit
                 catch (Exception ex)
                 {
                     if (masterDb.CurrentTransaction != null)
+                    {
+                        ReloadChangedEntities(dbContext);
                         masterDb.CurrentTransaction.Rollback();
-
+                    }
                     if (ex.Message.Contains("See the inner exception for details"))
                         throw ex.InnerException;
                     else
