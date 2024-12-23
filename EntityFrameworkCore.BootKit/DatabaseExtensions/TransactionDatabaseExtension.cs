@@ -49,15 +49,18 @@ namespace EntityFrameworkCore.BootKit
             }
         }
 
-        public static void ReloadChangedEntities(DbContext context)
+        public static void DiscardChanges(DbContext context)
         {
+            // Clear Change Tracker to discard changes
+            // Available in EF Core 7+
+#if NET8_0_OR_GREATER
+            context.ChangeTracker.Clear();
+#else
             foreach (var entry in context.ChangeTracker.Entries())
             {
-                if (entry.State != EntityState.Unchanged)
-                {
-                    entry.Reload(); // Reload from the database to discard all changes
-                }
+                entry.State = EntityState.Detached;
             }
+#endif
         }
 
         public static int Transaction<TTableInterface>(this Database db, Action action)
@@ -79,7 +82,7 @@ namespace EntityFrameworkCore.BootKit
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        ReloadChangedEntities(dbContext);
+                        DiscardChanges(dbContext);
                         if (ex.Message.Contains("See the inner exception for details"))
                             throw ex.InnerException;
                         else
@@ -99,7 +102,7 @@ namespace EntityFrameworkCore.BootKit
                     if (masterDb.CurrentTransaction != null)
                     {
                         masterDb.CurrentTransaction.Rollback();
-                        ReloadChangedEntities(dbContext);
+                        DiscardChanges(dbContext);
                     }
                     if (ex.Message.Contains("See the inner exception for details"))
                         throw ex.InnerException;
