@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -36,18 +35,6 @@ public class DefaultDataContextLoader
                 CreateDbIfNotExist = true
             });
         }
-        else if (db.Equals("Sqlite"))
-        {
-            connectionString = connectionString.Replace($"|DataDirectory|", Path.Combine(contentRootPath, "App_Data") + Path.DirectorySeparatorChar.ToString());
-            dc.BindDbContext<IDbRecordBinding, DbContext4Sqlite>(new DatabaseBind
-            {
-                MasterConnection = new SqliteConnection(connectionString),
-                SlaveConnections = new List<System.Data.Common.DbConnection> {
-                    new SqliteConnection(connectionString)
-                },
-                CreateDbIfNotExist = true
-            });
-        }
         else if (db.Equals("InMemory"))
         {
             dc.BindDbContext<IDbRecordBinding, DbContext4Memory>(new DatabaseBind
@@ -73,19 +60,6 @@ public class DefaultDataContextLoader
             dc.BindDbContext<IDbRecordBinding, DbContext4SqlServer2>(new DatabaseBind
             {
                 MasterConnection = new SqlConnection(connectionString),
-                CreateDbIfNotExist = true
-            });
-        }
-        else if (db.Equals("Sqlite"))
-        {
-            connectionString = connectionString.Replace($"|DataDirectory|", Path.Combine(contentRootPath, "App_Data", Path.DirectorySeparatorChar.ToString()));
-            Console.WriteLine(connectionString);
-            dc.BindDbContext<IDbRecordBinding, DbContext4Sqlite2>(new DatabaseBind
-            {
-                MasterConnection = new SqliteConnection(connectionString),
-                SlaveConnections = new List<System.Data.Common.DbConnection> {
-                    new SqliteConnection(connectionString)
-                },
                 CreateDbIfNotExist = true
             });
         }

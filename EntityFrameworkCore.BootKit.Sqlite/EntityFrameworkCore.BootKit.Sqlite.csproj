@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<LangVersion>$(LangVersion)</LangVersion>
+	<TargetFrameworks>net8.0;net6.0;netstandard2.1</TargetFrameworks>
+	<GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<Description>
+		EntityFrameworkCore Boot Kit (EFBK) is a quick start database connecter for using EntityFrameworkCore.
+		Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, MongoDb, Amazon Redshift, AWS Aurora and Memory database.
+	</Description>
+	<PackageProjectUrl>https://github.com/Oceania2018/EntityFrameworkCore.BootKit</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/Oceania2018/EntityFrameworkCore.BootKit</RepositoryUrl>
+	<PackageTags>EntityFramework, EntityFrameworkCore, Database, Redshift, Aurora, Postgre, MySql, MongoDB</PackageTags>
+	<Authors>Haiping Chen</Authors>
+	<Company>SciSharp STACK</Company>
+	<Version>$(BootKitVersion)</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EntityFrameworkCore.BootKit\EntityFrameworkCore.BootKit.csproj" />
+  </ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework5)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework5)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework6)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework6)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework8)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework8)" />
+	</ItemGroup>
+	
+</Project>

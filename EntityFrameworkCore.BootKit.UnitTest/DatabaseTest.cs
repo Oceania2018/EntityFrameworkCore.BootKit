@@ -1,4 +1,5 @@
 using EntityFrameworkCore.BootKit.DbContexts;
+using EntityFrameworkCore.BootKit.Sqlite;
 using EntityFrameworkCore.BootKit.UnitTest.Tables;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;

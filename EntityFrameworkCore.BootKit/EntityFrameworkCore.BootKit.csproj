@@ -45,8 +45,6 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework5)" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework5)" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework5)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.5.1" />
@@ -56,8 +54,6 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework6)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework6)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.5.1" />
@@ -67,8 +63,6 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework8)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework8)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="8.5.1" />

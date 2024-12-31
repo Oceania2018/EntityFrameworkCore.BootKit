@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.BootKit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.BootKit.MySql", "EntityFrameworkCore.BootKit.MySql\EntityFrameworkCore.BootKit.MySql.csproj", "{589CE124-0B1D-4E62-B075-364F7561E90F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.BootKit.Sqlite", "EntityFrameworkCore.BootKit.Sqlite\EntityFrameworkCore.BootKit.Sqlite.csproj", "{90408991-7584-40B2-96DB-02E469B20B08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{589CE124-0B1D-4E62-B075-364F7561E90F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{589CE124-0B1D-4E62-B075-364F7561E90F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{589CE124-0B1D-4E62-B075-364F7561E90F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90408991-7584-40B2-96DB-02E469B20B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90408991-7584-40B2-96DB-02E469B20B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90408991-7584-40B2-96DB-02E469B20B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90408991-7584-40B2-96DB-02E469B20B08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,6 +16,7 @@
     <ProjectReference Include="..\EntityFrameworkCore.BootKit.Mongo\EntityFrameworkCore.BootKit.Mongo.csproj" />
     <ProjectReference Include="..\EntityFrameworkCore.BootKit.MySql\EntityFrameworkCore.BootKit.MySql.csproj" />
     <ProjectReference Include="..\EntityFrameworkCore.BootKit.Postgre\EntityFrameworkCore.BootKit.Postgre.csproj" />
+    <ProjectReference Include="..\EntityFrameworkCore.BootKit.Sqlite\EntityFrameworkCore.BootKit.Sqlite.csproj" />
     <ProjectReference Include="..\EntityFrameworkCore.BootKit\EntityFrameworkCore.BootKit.csproj" />
   </ItemGroup>
 
