@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net6.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net10.0;net8.0;net6.0;netstandard2.1</TargetFrameworks>
     <GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
     <Description>EntityFrameworkCore Boot Kit (EFBK) is a quick start database connecter for using EntityFrameworkCore.
 Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, MongoDb, Amazon Redshift, AWS Aurora and Memory database.</Description>
@@ -15,12 +15,8 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
     <Authors>Haiping Chen</Authors>
     <Company>SciSharp STACK</Company>
     <Version>$(BootKitVersion)</Version>
-    <PackageReleaseNotes>1. Change to .netstandard 2.1.
-2. Upgrade to EF 6.0.
-3. Query raw sql in Dapper.
-4. Add TransactionAsync.
-5. Upgrade to EF 8.0.
-6. Add LastOrDefault for MongoDB.</PackageReleaseNotes>
+    <PackageReleaseNotes>1. Upgrade to EF 10.0.
+    </PackageReleaseNotes>
     <AssemblyVersion>$(BootKitVersion)</AssemblyVersion>
     <FileVersion>$(BootKitVersion)</FileVersion>
     <Copyright>Apache 2.0</Copyright>
@@ -47,7 +43,7 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework5)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework5)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.6.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="5.7.0" />
     </ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
@@ -56,7 +52,7 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework6)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework6)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.6.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="6.7.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
@@ -65,6 +61,15 @@ Support variety of databases such as Sqlite, MySql, SqlServer, PostgreSql, Mongo
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework8)" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="8.6.1" />
-	</ItemGroup>	
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="8.7.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(EntityFramework10)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(EntityFramework10)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EntityFramework10)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(EntityFramework10)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="$(EntityFramework10)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="10.7.0" />
+	</ItemGroup>
 </Project>

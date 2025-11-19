@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	<LangVersion>$(LangVersion)</LangVersion>
-	<TargetFrameworks>net8.0;net6.0;netstandard2.1</TargetFrameworks>
+	<TargetFrameworks>net10.0;net8.0;net6.0;netstandard2.1</TargetFrameworks>
 	<GeneratePackageOnBuild>$(GeneratePackageOnBuild)</GeneratePackageOnBuild>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -36,5 +36,9 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework8)" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework8)" />
 	</ItemGroup>
-	
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="$(EntityFramework10)" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite" Version="$(EntityFramework10)" />
+	</ItemGroup>
 </Project>
